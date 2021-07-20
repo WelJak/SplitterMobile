@@ -19,8 +19,8 @@ class AndroidUserRepository(private val userRemoteDataSource: UserRemoteDataSour
         return responseToResource(userRemoteDataSource.registerUser(registerUserRequest))
     }
 
-    override suspend fun getUserDetails(username: String): Resource<SplitterApiResponse<UserDetails>> {
-        return responseToResource(userRemoteDataSource.getUserDetails(username))
+    override suspend fun getUserDetails(username: String, token: String): Resource<SplitterApiResponse<UserDetails>> {
+        return responseToResource(userRemoteDataSource.getUserDetails(username, token))
     }
 
     private fun <T>responseToResource(splitterApiResponse: Response<SplitterApiResponse<T>>):Resource<SplitterApiResponse<T>> {

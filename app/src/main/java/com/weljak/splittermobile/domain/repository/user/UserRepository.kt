@@ -10,5 +10,5 @@ import com.weljak.splittermobile.data.util.Resource
 interface UserRepository {
     suspend fun authenticateUser(authenticationRequest: AuthenticationRequest): Resource<SplitterApiResponse<AuthenticationResponse>>
     suspend fun registerUser(registerUserRequest: RegisterUserRequest): Resource<SplitterApiResponse<UserDetails>>
-    suspend fun getUserDetails(username: String): Resource<SplitterApiResponse<UserDetails>>
+    suspend fun getUserDetails(username: String, token: String): Resource<SplitterApiResponse<UserDetails>>
 }

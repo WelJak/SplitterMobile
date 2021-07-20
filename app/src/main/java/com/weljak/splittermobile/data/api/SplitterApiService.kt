@@ -6,10 +6,7 @@ import com.weljak.splittermobile.data.model.SplitterApiResponse
 import com.weljak.splittermobile.data.model.user.RegisterUserRequest
 import com.weljak.splittermobile.data.model.user.UserDetails
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface SplitterApiService {
     @POST("user/auth/login")
@@ -19,5 +16,5 @@ interface SplitterApiService {
     suspend fun registerUser(@Body registerUserRequest: RegisterUserRequest): Response<SplitterApiResponse<UserDetails>>
 
     @GET("user/{username}")
-    suspend fun getUserDetails(@Path("username") username: String): Response<SplitterApiResponse<UserDetails>>
+    suspend fun getUserDetails(@Path("username") username: String, @Header("Authorization")token:String): Response<SplitterApiResponse<UserDetails>>
 }

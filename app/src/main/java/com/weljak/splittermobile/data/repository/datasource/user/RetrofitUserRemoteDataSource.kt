@@ -17,7 +17,7 @@ class RetrofitUserRemoteDataSource(private val splitterApiService: SplitterApiSe
         return splitterApiService.registerUser(registerUserRequest)
     }
 
-    override suspend fun getUserDetails(username: String): Response<SplitterApiResponse<UserDetails>> {
-        return splitterApiService.getUserDetails(username)
+    override suspend fun getUserDetails(username: String, token: String): Response<SplitterApiResponse<UserDetails>> {
+        return splitterApiService.getUserDetails(username, token)
     }
 }

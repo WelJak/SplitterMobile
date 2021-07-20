@@ -14,5 +14,5 @@ import retrofit2.http.Path
 interface UserRemoteDataSource {
     suspend fun authenticateUser(authenticationRequest: AuthenticationRequest): Response<SplitterApiResponse<AuthenticationResponse>>
     suspend fun registerUser(registerUserRequest: RegisterUserRequest): Response<SplitterApiResponse<UserDetails>>
-    suspend fun getUserDetails(username: String): Response<SplitterApiResponse<UserDetails>>
+    suspend fun getUserDetails(username: String, token: String): Response<SplitterApiResponse<UserDetails>>
 }
