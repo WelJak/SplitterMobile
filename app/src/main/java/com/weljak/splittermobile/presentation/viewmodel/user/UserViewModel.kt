@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.weljak.splittermobile.data.model.SplitterApiResponse
 import com.weljak.splittermobile.data.model.authentication.AuthenticationRequest
 import com.weljak.splittermobile.data.model.authentication.AuthenticationResponse
+import com.weljak.splittermobile.data.model.user.RegisterUserRequest
 import com.weljak.splittermobile.data.model.user.UserDetails
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.domain.usecase.AuthenticateUserUseCase
@@ -18,6 +19,7 @@ import com.weljak.splittermobile.domain.usecase.RegisterUserUseCase
 import com.weljak.splittermobile.presentation.util.ConnectionUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 class UserViewModel(
@@ -26,6 +28,7 @@ class UserViewModel(
     private val registerUserUseCase: RegisterUserUseCase,
     private val getUserDetailsUseCase: GetUserDetailsUseCase
     ):AndroidViewModel(app) {
+
     private val _userToken: MutableLiveData<Resource<SplitterApiResponse<AuthenticationResponse>>> = MutableLiveData()
     val userToken:LiveData<Resource<SplitterApiResponse<AuthenticationResponse>>>
         get() = _userToken
@@ -34,6 +37,10 @@ class UserViewModel(
     val userData:LiveData<Resource<SplitterApiResponse<UserDetails>>>
         get() = _userData
 
+    private val _registerData: MutableLiveData<Resource<SplitterApiResponse<UserDetails>>> = MutableLiveData()
+    val registerData: LiveData<Resource<SplitterApiResponse<UserDetails>>>
+        get() = _registerData
+
     fun authenticateUser(username: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         _userToken.postValue(Resource.Loading())
         try {
@@ -41,7 +48,6 @@ class UserViewModel(
                 val authRequest = AuthenticationRequest(username, password)
                 val response = authenticateUserUseCase.execute(authRequest)
                 _userToken.postValue(response)
-                //Log.i("API", response.data?.payload!!.token)
             } else {
                 Toast.makeText(app, "No internet connection", Toast.LENGTH_LONG).show()
                 _userToken.postValue(Resource.Error("No internetConnection"))
@@ -65,6 +71,26 @@ class UserViewModel(
         } catch (exception: Exception) {
             exception.printStackTrace()
             _userData.postValue(Resource.Error(exception.message.toString()))
+        }
+    }
+
+    fun registerUser(username: String, email: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            _registerData.postValue(Resource.Loading())
+            if (ConnectionUtils.isNetworkAvailable(app)) {
+                val request = RegisterUserRequest(username, email, password)
+                val response = registerUserUseCase.execute(request)
+                _registerData.postValue(response)
+            } else {
+                Toast.makeText(app, "No internet connection", Toast.LENGTH_LONG).show()
+                _registerData.postValue(Resource.Error("No internetConnection"))
+            }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@UserViewModel.app, "Error occured during registering: ${exception.message}", Toast.LENGTH_LONG).show()
+                _registerData.postValue(Resource.Error(exception.message.toString()))
+            }
         }
     }
 

@@ -17,7 +17,6 @@ import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModel
 class LoginFragment() : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: UserViewModel
-    private var isLoading = false
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var currentUser: String
 
@@ -33,6 +32,9 @@ class LoginFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         binding = FragmentLoginBinding.bind(view)
+        if (sharedPreferences.getString("token", "")?.isNotBlank() == true) {
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        }
         viewModel= (activity as MainActivity).viewModel
         viewModel.userToken.observe(viewLifecycleOwner, { response ->
             when(response) {
@@ -62,6 +64,10 @@ class LoginFragment() : Fragment() {
         binding.loginButton.setOnClickListener {
             loginButtonPressedCallback()
         }
+
+        binding.registerButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
     }
 
     private fun loginButtonPressedCallback() {
@@ -73,12 +79,10 @@ class LoginFragment() : Fragment() {
     }
 
     private fun showProgressBar(){
-        isLoading = true
         binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar(){
-        isLoading = false
         binding.progressBar.visibility = View.INVISIBLE
     }
 }

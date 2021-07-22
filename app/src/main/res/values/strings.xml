@@ -16,4 +16,6 @@
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="current_user_avatar">Current User Avatar</string>
+    <string name="latest_activity">Latest Activity</string>
 </resources>

@@ -16,7 +16,6 @@ import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModel
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: UserViewModel
-    private var isLoading = false
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
@@ -68,12 +67,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun showProgressBar(){
-        isLoading = true
         binding.progressBar2.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar(){
-        isLoading = false
         binding.progressBar2.visibility = View.INVISIBLE
     }
 }
