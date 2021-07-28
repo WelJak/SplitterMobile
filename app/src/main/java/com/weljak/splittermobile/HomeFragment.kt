@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         binding = FragmentHomeBinding.bind(view)
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (activity as MainActivity).userViewModel
         viewModel.userData.observe(viewLifecycleOwner, { response ->
             when(response) {
                 is Resource.Loading -> {

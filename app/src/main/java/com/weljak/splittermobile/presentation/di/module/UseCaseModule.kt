@@ -1,9 +1,11 @@
 package com.weljak.splittermobile.presentation.di.module
 
+import com.weljak.splittermobile.domain.repository.friend.FriendRepository
 import com.weljak.splittermobile.domain.repository.user.UserRepository
-import com.weljak.splittermobile.domain.usecase.AuthenticateUserUseCase
-import com.weljak.splittermobile.domain.usecase.GetUserDetailsUseCase
-import com.weljak.splittermobile.domain.usecase.RegisterUserUseCase
+import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
+import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
+import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
+import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +31,11 @@ class UseCaseModule {
     @Provides
     fun provideGetUserDetailsUseCase(userRepository: UserRepository): GetUserDetailsUseCase {
         return GetUserDetailsUseCase(userRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCurrentUserFriendListUseCase(friendRepository: FriendRepository): GetCurrentUserFriendListUseCase {
+        return GetCurrentUserFriendListUseCase(friendRepository)
     }
 }

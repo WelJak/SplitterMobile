@@ -1,7 +1,6 @@
 package com.weljak.splittermobile.presentation.viewmodel.user
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -13,9 +12,9 @@ import com.weljak.splittermobile.data.model.authentication.AuthenticationRespons
 import com.weljak.splittermobile.data.model.user.RegisterUserRequest
 import com.weljak.splittermobile.data.model.user.UserDetails
 import com.weljak.splittermobile.data.util.Resource
-import com.weljak.splittermobile.domain.usecase.AuthenticateUserUseCase
-import com.weljak.splittermobile.domain.usecase.GetUserDetailsUseCase
-import com.weljak.splittermobile.domain.usecase.RegisterUserUseCase
+import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
+import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
+import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
 import com.weljak.splittermobile.presentation.util.ConnectionUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

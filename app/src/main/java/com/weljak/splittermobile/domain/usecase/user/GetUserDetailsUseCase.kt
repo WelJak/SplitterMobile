@@ -1,4 +1,4 @@
-package com.weljak.splittermobile.domain.usecase
+package com.weljak.splittermobile.domain.usecase.user
 
 import com.weljak.splittermobile.data.model.SplitterApiResponse
 import com.weljak.splittermobile.data.model.user.UserDetails

@@ -1,9 +1,11 @@
 package com.weljak.splittermobile.presentation.di.module
 
 import android.app.Application
-import com.weljak.splittermobile.domain.usecase.AuthenticateUserUseCase
-import com.weljak.splittermobile.domain.usecase.GetUserDetailsUseCase
-import com.weljak.splittermobile.domain.usecase.RegisterUserUseCase
+import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
+import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
+import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
+import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
+import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -27,6 +29,18 @@ class ViewModelFactoryModule {
             authenticateUserUseCase,
             registerUserUseCase,
             getUserDetailsUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideFriendViewModelFactory(
+        app:Application,
+        getCurrentUserFriendListUseCase: GetCurrentUserFriendListUseCase
+    ): FriendViewModelFactory {
+        return FriendViewModelFactory(
+            app,
+            getCurrentUserFriendListUseCase
         )
     }
 }

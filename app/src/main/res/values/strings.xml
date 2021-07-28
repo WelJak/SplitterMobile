@@ -18,4 +18,9 @@
     <string name="login">Login</string>
     <string name="current_user_avatar">Current User Avatar</string>
     <string name="latest_activity">Latest Activity</string>
+    <string name="home">Home</string>
+    <string name="friends">Friends</string>
+    <string name="add_friend">Add friend</string>
+    <string name="add_friend_button">Add friend button</string>
+    <string name="user_avatar">user avatar</string>
 </resources>

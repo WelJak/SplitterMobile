@@ -33,9 +33,10 @@ class LoginFragment() : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         binding = FragmentLoginBinding.bind(view)
         if (sharedPreferences.getString("token", "")?.isNotBlank() == true) {
+            (activity as MainActivity).makeNavBarVisible()
             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }
-        viewModel= (activity as MainActivity).viewModel
+        viewModel= (activity as MainActivity).userViewModel
         viewModel.userToken.observe(viewLifecycleOwner, { response ->
             when(response) {
                 is Resource.Loading -> {
@@ -49,6 +50,7 @@ class LoginFragment() : Fragment() {
                         editor?.putString("token", response.data.payload?.token)
                         editor?.putString("username", currentUser)
                         editor?.apply()
+                        (activity as MainActivity).makeNavBarVisible()
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }
                 }

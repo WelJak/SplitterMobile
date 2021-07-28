@@ -3,9 +3,9 @@ package com.weljak.splittermobile.presentation.viewmodel.user
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.weljak.splittermobile.domain.usecase.AuthenticateUserUseCase
-import com.weljak.splittermobile.domain.usecase.GetUserDetailsUseCase
-import com.weljak.splittermobile.domain.usecase.RegisterUserUseCase
+import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
+import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
+import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
 
 class UserViewModelFactory(
     private val app:Application,

@@ -26,7 +26,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRegisterBinding.bind(view)
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (activity as MainActivity).userViewModel
         viewModel.registerData.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is Resource.Loading -> {

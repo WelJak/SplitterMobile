@@ -3,6 +3,7 @@ package com.weljak.splittermobile.data.api
 import com.weljak.splittermobile.data.model.authentication.AuthenticationRequest
 import com.weljak.splittermobile.data.model.authentication.AuthenticationResponse
 import com.weljak.splittermobile.data.model.SplitterApiResponse
+import com.weljak.splittermobile.data.model.friend.Friendship
 import com.weljak.splittermobile.data.model.user.RegisterUserRequest
 import com.weljak.splittermobile.data.model.user.UserDetails
 import retrofit2.Response
@@ -17,4 +18,7 @@ interface SplitterApiService {
 
     @GET("user/{username}")
     suspend fun getUserDetails(@Path("username") username: String, @Header("Authorization")token:String): Response<SplitterApiResponse<UserDetails>>
+
+    @GET("friends")
+    suspend fun getCurrentUserFriendList(@Header("Authorization")token:String): Response<SplitterApiResponse<Friendship>>
 }
