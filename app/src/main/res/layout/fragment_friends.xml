@@ -20,15 +20,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friend_list_rv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp" />
 
     <ImageButton
         android:id="@+id/add_friend_btn"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:contentDescription="@string/add_friend_button"
+        android:contentDescription="@string/add_friend"
         android:src="@drawable/ic_launcher_foreground"
         android:text="@string/add_friend" />
+
+    <ProgressBar
+        android:id="@+id/friendsProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 </LinearLayout>

@@ -21,6 +21,6 @@
     <string name="home">Home</string>
     <string name="friends">Friends</string>
     <string name="add_friend">Add friend</string>
-    <string name="add_friend_button">Add friend button</string>
     <string name="user_avatar">user avatar</string>
+    <string name="search">Search</string>
 </resources>

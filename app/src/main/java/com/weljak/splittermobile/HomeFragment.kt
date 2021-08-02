@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.databinding.FragmentHomeBinding
+import com.weljak.splittermobile.presentation.util.ViewUtils
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModel
 
 class HomeFragment : Fragment() {
@@ -31,18 +32,18 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         binding = FragmentHomeBinding.bind(view)
         viewModel = (activity as MainActivity).userViewModel
-        viewModel.userData.observe(viewLifecycleOwner, { response ->
+        viewModel.currentUserData.observe(viewLifecycleOwner, { response ->
             when(response) {
                 is Resource.Loading -> {
-                    showProgressBar()
+                    ViewUtils.showProgressBar(binding.progressBar2)
                 }
                 is Resource.Success -> {
-                    hideProgressBar()
+                    ViewUtils.hideProgressBar(binding.progressBar2)
                     val welcomeText = "Hello ${response.data?.payload?.username} your email is ${response.data?.payload?.email}"
                     binding.helloTextView.text = welcomeText
                 }
                 is Resource.Error -> {
-                    hideProgressBar()
+                    ViewUtils.hideProgressBar(binding.progressBar2)
                     response.message?.let {
                         Toast.makeText(activity,"An error occurred : $it", Toast.LENGTH_LONG).show()
                     }
@@ -57,20 +58,12 @@ class HomeFragment : Fragment() {
         val token = sharedPreferences.getString("token", "")
         Log.i("app", username + token)
         if (username != null && token != null) {
-            viewModel.getUserData(
+            viewModel.getCurrentUserData(
                 username,
                 "Bearer $token"
             )
         } else {
             Toast.makeText(activity, "Not enough data to get user details", Toast.LENGTH_LONG).show()
         }
-    }
-
-    private fun showProgressBar(){
-        binding.progressBar2.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar(){
-        binding.progressBar2.visibility = View.INVISIBLE
     }
 }

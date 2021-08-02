@@ -1,6 +1,7 @@
 package com.weljak.splittermobile.presentation.di.module
 
 import android.app.Application
+import com.weljak.splittermobile.domain.usecase.friend.CreateFriendRequestUseCase
 import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
@@ -36,11 +37,13 @@ class ViewModelFactoryModule {
     @Provides
     fun provideFriendViewModelFactory(
         app:Application,
-        getCurrentUserFriendListUseCase: GetCurrentUserFriendListUseCase
+        getCurrentUserFriendListUseCase: GetCurrentUserFriendListUseCase,
+        createFriendRequestUseCase: CreateFriendRequestUseCase
     ): FriendViewModelFactory {
         return FriendViewModelFactory(
             app,
-            getCurrentUserFriendListUseCase
+            getCurrentUserFriendListUseCase,
+            createFriendRequestUseCase
         )
     }
 }

@@ -2,6 +2,7 @@ package com.weljak.splittermobile.presentation.di.module
 
 import com.weljak.splittermobile.domain.repository.friend.FriendRepository
 import com.weljak.splittermobile.domain.repository.user.UserRepository
+import com.weljak.splittermobile.domain.usecase.friend.CreateFriendRequestUseCase
 import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
@@ -37,5 +38,11 @@ class UseCaseModule {
     @Provides
     fun provideGetCurrentUserFriendListUseCase(friendRepository: FriendRepository): GetCurrentUserFriendListUseCase {
         return GetCurrentUserFriendListUseCase(friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCreateFriendRequestUseCase(friendRepository: FriendRepository): CreateFriendRequestUseCase {
+        return CreateFriendRequestUseCase(friendRepository)
     }
 }

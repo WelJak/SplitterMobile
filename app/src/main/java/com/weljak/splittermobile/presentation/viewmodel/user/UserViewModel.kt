@@ -32,9 +32,13 @@ class UserViewModel(
     val userToken:LiveData<Resource<SplitterApiResponse<AuthenticationResponse>>>
         get() = _userToken
 
-    private val _userData: MutableLiveData<Resource<SplitterApiResponse<UserDetails>>> = MutableLiveData()
-    val userData:LiveData<Resource<SplitterApiResponse<UserDetails>>>
-        get() = _userData
+    private val _currentUserData: MutableLiveData<Resource<SplitterApiResponse<UserDetails>>> = MutableLiveData()
+    val currentUserData:LiveData<Resource<SplitterApiResponse<UserDetails>>>
+        get() = _currentUserData
+
+    private val _searchedUser: MutableLiveData<Resource<SplitterApiResponse<UserDetails>>> = MutableLiveData()
+    val searchedUser:LiveData<Resource<SplitterApiResponse<UserDetails>>>
+        get() = _searchedUser
 
     private val _registerData: MutableLiveData<Resource<SplitterApiResponse<UserDetails>>> = MutableLiveData()
     val registerData: LiveData<Resource<SplitterApiResponse<UserDetails>>>
@@ -57,19 +61,35 @@ class UserViewModel(
         }
     }
 
-    fun getUserData(username: String, token: String) = viewModelScope.launch(Dispatchers.IO) {
-        _userData.postValue(Resource.Loading())
+    fun getCurrentUserData(username: String, token: String) = viewModelScope.launch(Dispatchers.IO) {
+        _currentUserData.postValue(Resource.Loading())
         try {
             if (ConnectionUtils.isNetworkAvailable(app)) {
                 val response = getUserDetailsUseCase.execute(username, token)
-                _userData.postValue(response)
+                _currentUserData.postValue(response)
             } else {
                 Toast.makeText(app, "No internet connection", Toast.LENGTH_LONG).show()
-                _userData.postValue(Resource.Error("No internetConnection"))
+                _currentUserData.postValue(Resource.Error("No internetConnection"))
             }
         } catch (exception: Exception) {
             exception.printStackTrace()
-            _userData.postValue(Resource.Error(exception.message.toString()))
+            _currentUserData.postValue(Resource.Error(exception.message.toString()))
+        }
+    }
+
+    fun getUserData(searchQuery: String, token: String) = viewModelScope.launch(Dispatchers.IO) {
+        _searchedUser.postValue(Resource.Loading())
+        try {
+            if (ConnectionUtils.isNetworkAvailable(app)) {
+                val response = getUserDetailsUseCase.execute(searchQuery, token)
+                _searchedUser.postValue(response)
+            } else {
+                Toast.makeText(app, "No internet connection", Toast.LENGTH_LONG).show()
+                _searchedUser.postValue(Resource.Error("No internetConnection"))
+            }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+            _searchedUser.postValue(Resource.Error(exception.message.toString()))
         }
     }
 

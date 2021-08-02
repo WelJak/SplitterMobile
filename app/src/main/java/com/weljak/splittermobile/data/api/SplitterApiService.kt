@@ -4,6 +4,8 @@ import com.weljak.splittermobile.data.model.authentication.AuthenticationRequest
 import com.weljak.splittermobile.data.model.authentication.AuthenticationResponse
 import com.weljak.splittermobile.data.model.SplitterApiResponse
 import com.weljak.splittermobile.data.model.friend.Friendship
+import com.weljak.splittermobile.data.model.friend.request.FriendshipRequest
+import com.weljak.splittermobile.data.model.friend.request.FriendshipRequestCreationForm
 import com.weljak.splittermobile.data.model.user.RegisterUserRequest
 import com.weljak.splittermobile.data.model.user.UserDetails
 import retrofit2.Response
@@ -21,4 +23,7 @@ interface SplitterApiService {
 
     @GET("friends")
     suspend fun getCurrentUserFriendList(@Header("Authorization")token:String): Response<SplitterApiResponse<Friendship>>
+
+    @POST("friends/request/create")
+    suspend fun createFriendRequest(@Header("Authorization")token:String, @Body friendshipRequestCreationForm: FriendshipRequestCreationForm): Response<SplitterApiResponse<FriendshipRequest>>
 }
