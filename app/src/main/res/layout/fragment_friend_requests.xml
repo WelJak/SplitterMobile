@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FriendRequestsFragment">
+
+
+    <TextView
+        android:id="@+id/friend_request_fragment_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="monospace"
+        android:text="@string/friend_requests"
+        android:textSize="34sp" />
+
+    <TextView
+        android:id="@+id/pending_request_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/pending_friend_requests"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pending_requests_rv"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/received_requests_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="@string/received_friend_requests"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/received_requests_rv"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
+</LinearLayout>

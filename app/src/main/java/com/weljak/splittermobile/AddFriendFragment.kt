@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequestCreationForm
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.databinding.FragmentAddFriendBinding
@@ -97,6 +98,10 @@ class AddFriendFragment : Fragment() {
 
         binding.addFriendBtn.setOnClickListener {
             addFriendButtonCallback()
+        }
+
+        binding.friendRequestsBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_addFriendFragment_to_friendRequestsFragment)
         }
 
         binding.searchFriendSv.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
