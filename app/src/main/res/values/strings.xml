@@ -27,4 +27,6 @@
     <string name="pending_friend_requests">Your friend requests</string>
     <string name="received_friend_requests">Received friend requests</string>
     <string name="friend_avatar">friend_avatar</string>
+    <string name="confirm_friend_request">confirm friend request</string>
+    <string name="reject_friend_request">reject friend request</string>
 </resources>

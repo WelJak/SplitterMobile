@@ -19,4 +19,12 @@ class AndroidFriendRepository(private val friendRemoteDataSource: FriendRemoteDa
     ): Resource<SplitterApiResponse<FriendshipRequest>> {
         return Resource.valueOf(friendRemoteDataSource.createFriendRequest(token, friendshipRequestCreationForm))
     }
+
+    override suspend fun getCurrentUserSentFriendRequests(token: String): Resource<SplitterApiResponse<List<FriendshipRequest>>> {
+        return Resource.valueOf(friendRemoteDataSource.getCurrentUserSentFriendRequests(token))
+    }
+
+    override suspend fun getCurrentUserReceivedFriendRequests(token: String): Resource<SplitterApiResponse<List<FriendshipRequest>>> {
+        return Resource.valueOf(friendRemoteDataSource.getCurrentUserReceivedFriendRequests(token))
+    }
 }

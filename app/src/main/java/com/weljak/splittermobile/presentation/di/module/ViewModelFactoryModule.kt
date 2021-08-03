@@ -3,6 +3,8 @@ package com.weljak.splittermobile.presentation.di.module
 import android.app.Application
 import com.weljak.splittermobile.domain.usecase.friend.CreateFriendRequestUseCase
 import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
+import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserReceivedFriendRequestsUseCase
+import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserSentFriendRequestsUseCase
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
 import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
@@ -38,12 +40,16 @@ class ViewModelFactoryModule {
     fun provideFriendViewModelFactory(
         app:Application,
         getCurrentUserFriendListUseCase: GetCurrentUserFriendListUseCase,
-        createFriendRequestUseCase: CreateFriendRequestUseCase
+        createFriendRequestUseCase: CreateFriendRequestUseCase,
+        getCurrentUserSentFriendRequestsUseCase: GetCurrentUserSentFriendRequestsUseCase,
+        getCurrentUserReceivedFriendRequestsUseCase: GetCurrentUserReceivedFriendRequestsUseCase
     ): FriendViewModelFactory {
         return FriendViewModelFactory(
             app,
             getCurrentUserFriendListUseCase,
-            createFriendRequestUseCase
+            createFriendRequestUseCase,
+            getCurrentUserSentFriendRequestsUseCase,
+            getCurrentUserReceivedFriendRequestsUseCase
         )
     }
 }

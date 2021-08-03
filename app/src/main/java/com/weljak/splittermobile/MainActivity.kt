@@ -8,6 +8,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.weljak.splittermobile.databinding.ActivityMainBinding
 import com.weljak.splittermobile.presentation.adapter.FriendsAdapter
+import com.weljak.splittermobile.presentation.adapter.ReceivedFriendRequestsAdapter
+import com.weljak.splittermobile.presentation.adapter.SentFriendRequestsAdapter
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModel
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModel
@@ -22,6 +24,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var userViewModelFactory: UserViewModelFactory
     @Inject
     lateinit var friendsAdapter: FriendsAdapter
+    @Inject
+    lateinit var sentFriendRequestsAdapter: SentFriendRequestsAdapter
+    @Inject
+    lateinit var receivedFriendRequestsAdapter: ReceivedFriendRequestsAdapter
     @Inject
     lateinit var friendsViewModelFactory: FriendViewModelFactory
     lateinit var userViewModel: UserViewModel

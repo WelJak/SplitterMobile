@@ -43,4 +43,11 @@
         android:id="@+id/received_requests_rv"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
+
+    <ProgressBar
+        android:id="@+id/friend_requests_pb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 </LinearLayout>

@@ -14,6 +14,8 @@ import com.weljak.splittermobile.data.model.friend.request.FriendshipRequestCrea
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.domain.usecase.friend.CreateFriendRequestUseCase
 import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
+import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserReceivedFriendRequestsUseCase
+import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserSentFriendRequestsUseCase
 import com.weljak.splittermobile.presentation.util.ConnectionUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +24,9 @@ import java.lang.Exception
 class FriendViewModel(
     private val app: Application,
     private val getCurrentUserFriendListUseCase: GetCurrentUserFriendListUseCase,
-    private val createFriendRequestUseCase: CreateFriendRequestUseCase
+    private val createFriendRequestUseCase: CreateFriendRequestUseCase,
+    private val getCurrentUserSentFriendRequestsUseCase: GetCurrentUserSentFriendRequestsUseCase,
+    private val getCurrentUserReceivedFriendRequestsUseCase: GetCurrentUserReceivedFriendRequestsUseCase
 ) : AndroidViewModel(app) {
     private val _currentUserFriendship =
         MutableLiveData<Resource<SplitterApiResponse<Friendship>>>()
@@ -32,6 +36,14 @@ class FriendViewModel(
     private val _addFriendReqResponse = MutableLiveData<Resource<SplitterApiResponse<FriendshipRequest>>>()
     val addFriendReqResponse: LiveData<Resource<SplitterApiResponse<FriendshipRequest>>>
         get() = _addFriendReqResponse
+
+    private val _sentFriendRequests = MutableLiveData<Resource<SplitterApiResponse<List<FriendshipRequest>>>>()
+    val sentFriendRequests: LiveData<Resource<SplitterApiResponse<List<FriendshipRequest>>>>
+        get() = _sentFriendRequests
+
+    private val _receivedFriendRequests = MutableLiveData<Resource<SplitterApiResponse<List<FriendshipRequest>>>>()
+    val receivedFriendRequests: LiveData<Resource<SplitterApiResponse<List<FriendshipRequest>>>>
+        get() = _receivedFriendRequests
 
     fun getCurrentUserFriendList(token: String) = viewModelScope.launch(Dispatchers.IO) {
         _currentUserFriendship.postValue(Resource.Loading())
@@ -62,6 +74,38 @@ class FriendViewModel(
         } catch (e: Exception) {
             e.printStackTrace()
             _addFriendReqResponse.postValue(Resource.Error(e.message.toString()))
+        }
+    }
+
+    fun getCurrentUserSentFriendRequests(token: String) = viewModelScope.launch(Dispatchers.IO) {
+        _sentFriendRequests.postValue(Resource.Loading())
+        try {
+            if (ConnectionUtils.isNetworkAvailable(app)) {
+                val response = getCurrentUserSentFriendRequestsUseCase.execute(token)
+                _sentFriendRequests.postValue(response)
+            } else {
+                Toast.makeText(app, "No internet connection", Toast.LENGTH_LONG).show()
+                _sentFriendRequests.postValue(Resource.Error("No internetConnection"))
+            }
+        } catch (e:Exception) {
+            e.printStackTrace()
+            _sentFriendRequests.postValue(Resource.Error(e.message.toString()))
+        }
+    }
+
+    fun getCurrentUserReceivedFriendRequests(token: String) = viewModelScope.launch(Dispatchers.IO) {
+        _receivedFriendRequests.postValue(Resource.Loading())
+        try {
+            if (ConnectionUtils.isNetworkAvailable(app)) {
+                val response = getCurrentUserReceivedFriendRequestsUseCase.execute(token)
+                _receivedFriendRequests.postValue(response)
+            } else {
+                Toast.makeText(app, "No internet connection", Toast.LENGTH_LONG).show()
+                _receivedFriendRequests.postValue(Resource.Error("No internetConnection"))
+            }
+        } catch (e:Exception) {
+            e.printStackTrace()
+            _receivedFriendRequests.postValue(Resource.Error(e.message.toString()))
         }
     }
 }

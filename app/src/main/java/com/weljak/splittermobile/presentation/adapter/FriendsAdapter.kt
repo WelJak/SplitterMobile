@@ -32,7 +32,7 @@ class FriendsAdapter: RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsViewHolder {
-       val binding = FriendListElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = FriendListElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FriendsViewHolder(binding)
     }
 

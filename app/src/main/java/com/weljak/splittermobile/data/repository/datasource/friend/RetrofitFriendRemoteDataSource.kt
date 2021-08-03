@@ -18,4 +18,12 @@ class RetrofitFriendRemoteDataSource(private val splitterApiService: SplitterApi
     ): Response<SplitterApiResponse<FriendshipRequest>> {
         return splitterApiService.createFriendRequest(token, friendshipRequestCreationForm)
     }
+
+    override suspend fun getCurrentUserSentFriendRequests(token: String): Response<SplitterApiResponse<List<FriendshipRequest>>> {
+        return splitterApiService.getCurrentUserSentFriendRequests(token)
+    }
+
+    override suspend fun getCurrentUserReceivedFriendRequests(token: String): Response<SplitterApiResponse<List<FriendshipRequest>>> {
+        return splitterApiService.getCurrentUserReceivedFriendRequests(token)
+    }
 }

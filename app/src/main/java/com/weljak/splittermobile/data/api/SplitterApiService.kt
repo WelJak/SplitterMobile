@@ -26,4 +26,10 @@ interface SplitterApiService {
 
     @POST("friends/request/create")
     suspend fun createFriendRequest(@Header("Authorization")token:String, @Body friendshipRequestCreationForm: FriendshipRequestCreationForm): Response<SplitterApiResponse<FriendshipRequest>>
+
+    @GET("friends/request/sent")
+    suspend fun getCurrentUserSentFriendRequests(@Header("Authorization")token:String): Response<SplitterApiResponse<List<FriendshipRequest>>>
+
+    @GET("friends/request/received")
+    suspend fun getCurrentUserReceivedFriendRequests(@Header("Authorization")token:String): Response<SplitterApiResponse<List<FriendshipRequest>>>
 }
