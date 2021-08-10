@@ -1,6 +1,6 @@
 package com.weljak.splittermobile.domain.usecase.user
 
-import com.weljak.splittermobile.data.model.SplitterApiResponse
+import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import com.weljak.splittermobile.data.model.user.RegisterUserRequest
 import com.weljak.splittermobile.data.model.user.UserDetails
 import com.weljak.splittermobile.data.util.Resource

@@ -1,8 +1,9 @@
 package com.weljak.splittermobile.data.api
 
+import com.weljak.splittermobile.data.model.api.ConfirmationResponse
 import com.weljak.splittermobile.data.model.authentication.AuthenticationRequest
 import com.weljak.splittermobile.data.model.authentication.AuthenticationResponse
-import com.weljak.splittermobile.data.model.SplitterApiResponse
+import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import com.weljak.splittermobile.data.model.friend.Friendship
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequest
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequestCreationForm
@@ -22,14 +23,24 @@ interface SplitterApiService {
     suspend fun getUserDetails(@Path("username") username: String, @Header("Authorization")token:String): Response<SplitterApiResponse<UserDetails>>
 
     @GET("friends")
-    suspend fun getCurrentUserFriendList(@Header("Authorization")token:String): Response<SplitterApiResponse<Friendship>>
+    suspend fun getCurrentUserFriendList(@Header("Authorization") token:String): Response<SplitterApiResponse<Friendship>>
 
     @POST("friends/request/create")
-    suspend fun createFriendRequest(@Header("Authorization")token:String, @Body friendshipRequestCreationForm: FriendshipRequestCreationForm): Response<SplitterApiResponse<FriendshipRequest>>
+    suspend fun createFriendRequest(@Header("Authorization") token:String, @Body friendshipRequestCreationForm: FriendshipRequestCreationForm): Response<SplitterApiResponse<FriendshipRequest>>
 
     @GET("friends/request/sent")
-    suspend fun getCurrentUserSentFriendRequests(@Header("Authorization")token:String): Response<SplitterApiResponse<List<FriendshipRequest>>>
+    suspend fun getCurrentUserSentFriendRequests(@Header("Authorization") token:String): Response<SplitterApiResponse<List<FriendshipRequest>>>
 
     @GET("friends/request/received")
-    suspend fun getCurrentUserReceivedFriendRequests(@Header("Authorization")token:String): Response<SplitterApiResponse<List<FriendshipRequest>>>
+    suspend fun getCurrentUserReceivedFriendRequests(@Header("Authorization") token:String): Response<SplitterApiResponse<List<FriendshipRequest>>>
+
+    @GET("friends/request/confirm/{reqId}/{confirmationId}")
+    suspend fun confirmFriendRequest(
+        @Header("Authorization") token: String,
+        @Path("reqId") reqId: String,
+        @Path("confirmationId") confirmationId: String
+    ): Response<SplitterApiResponse<ConfirmationResponse>>
+
+    @DELETE("friends/request/cancel/{reqId}")
+    suspend fun declineFriendRequest(@Header("Authorization") token: String, @Path("reqId") reqId: String): Response<SplitterApiResponse<Void>>
 }

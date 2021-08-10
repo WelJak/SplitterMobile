@@ -1,10 +1,7 @@
 package com.weljak.splittermobile.presentation.di.module
 
 import android.app.Application
-import com.weljak.splittermobile.domain.usecase.friend.CreateFriendRequestUseCase
-import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
-import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserReceivedFriendRequestsUseCase
-import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserSentFriendRequestsUseCase
+import com.weljak.splittermobile.domain.usecase.friend.*
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
 import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
@@ -42,14 +39,18 @@ class ViewModelFactoryModule {
         getCurrentUserFriendListUseCase: GetCurrentUserFriendListUseCase,
         createFriendRequestUseCase: CreateFriendRequestUseCase,
         getCurrentUserSentFriendRequestsUseCase: GetCurrentUserSentFriendRequestsUseCase,
-        getCurrentUserReceivedFriendRequestsUseCase: GetCurrentUserReceivedFriendRequestsUseCase
+        getCurrentUserReceivedFriendRequestsUseCase: GetCurrentUserReceivedFriendRequestsUseCase,
+        confirmFriendRequestUseCase: ConfirmFriendRequestUseCase,
+        declineFriendRequestUseCase: DeclineFriendRequestUseCase
     ): FriendViewModelFactory {
         return FriendViewModelFactory(
             app,
             getCurrentUserFriendListUseCase,
             createFriendRequestUseCase,
             getCurrentUserSentFriendRequestsUseCase,
-            getCurrentUserReceivedFriendRequestsUseCase
+            getCurrentUserReceivedFriendRequestsUseCase,
+            confirmFriendRequestUseCase,
+            declineFriendRequestUseCase
         )
     }
 }

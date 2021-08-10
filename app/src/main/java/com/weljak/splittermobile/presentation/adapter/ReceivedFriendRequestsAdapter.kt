@@ -47,6 +47,24 @@ class ReceivedFriendRequestsAdapter: RecyclerView.Adapter<ReceivedFriendRequests
     inner class ReceivedFriendRequestsViewHolder(private val binding: ReceivedFriendRequestListElementBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(friendRequest: FriendshipRequest) {
             binding.receivedFrUsernameTv.text = friendRequest.username
+            binding.confirmRequestBtn.setOnClickListener{ acceptFriendRequestButtonCallback?.let {
+                it(friendRequest)
+            } }
+            binding.rejectFriendRequestBtn.setOnClickListener { declineFriendRequestButtonCallback?.let {
+                it(friendRequest)
+            } }
         }
+    }
+
+    private var acceptFriendRequestButtonCallback: ((FriendshipRequest) -> Unit) ?= null
+
+    fun setAcceptFriendRequestButtonCallback(callback :(FriendshipRequest) -> Unit) {
+        acceptFriendRequestButtonCallback = callback
+    }
+
+    private var declineFriendRequestButtonCallback: ((FriendshipRequest) -> Unit) ?= null
+
+    fun setDeclineFriendRequestButtonCallback(callback :(FriendshipRequest) -> Unit) {
+        declineFriendRequestButtonCallback = callback
     }
 }

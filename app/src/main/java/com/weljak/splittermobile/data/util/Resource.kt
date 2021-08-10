@@ -1,6 +1,6 @@
 package com.weljak.splittermobile.data.util
 
-import com.weljak.splittermobile.data.model.SplitterApiResponse
+import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import retrofit2.Response
 
 sealed class Resource<T>(
@@ -11,7 +11,7 @@ sealed class Resource<T>(
     class Loading<T>(data: T? = null) : Resource<T>(data)
     class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
     companion object {
-        fun <T>valueOf(splitterApiResponse: Response<SplitterApiResponse<T>>):Resource<SplitterApiResponse<T>> {
+        fun <T> valueOf(splitterApiResponse: Response<SplitterApiResponse<T>>):Resource<SplitterApiResponse<T>> {
             if (splitterApiResponse.isSuccessful) {
                 splitterApiResponse.body()?.let { result ->
                     return Success(result)

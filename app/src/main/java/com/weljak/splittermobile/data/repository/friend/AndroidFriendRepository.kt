@@ -1,6 +1,7 @@
 package com.weljak.splittermobile.data.repository.friend
 
-import com.weljak.splittermobile.data.model.SplitterApiResponse
+import com.weljak.splittermobile.data.model.api.ConfirmationResponse
+import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import com.weljak.splittermobile.data.model.friend.Friendship
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequest
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequestCreationForm
@@ -26,5 +27,20 @@ class AndroidFriendRepository(private val friendRemoteDataSource: FriendRemoteDa
 
     override suspend fun getCurrentUserReceivedFriendRequests(token: String): Resource<SplitterApiResponse<List<FriendshipRequest>>> {
         return Resource.valueOf(friendRemoteDataSource.getCurrentUserReceivedFriendRequests(token))
+    }
+
+    override suspend fun confirmFriendRequest(
+        token: String,
+        reqId: String,
+        confirmationId: String
+    ): Resource<SplitterApiResponse<ConfirmationResponse>> {
+        return Resource.valueOf(friendRemoteDataSource.confirmFriendRequest(token, reqId, confirmationId))
+    }
+
+    override suspend fun declineFriendRequest(
+        token: String,
+        reqId: String
+    ): Resource<SplitterApiResponse<Void>> {
+        return Resource.valueOf(friendRemoteDataSource.declineFriendRequest(token, reqId))
     }
 }

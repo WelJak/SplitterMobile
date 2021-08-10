@@ -36,10 +36,20 @@ class FriendRequestsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFriendRequestsBinding.bind(view)
         sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        sentFriendRequestsAdapter = (activity as MainActivity).sentFriendRequestsAdapter
-        receivedFriendRequestsAdapter = (activity as MainActivity).receivedFriendRequestsAdapter
-        friendViewModel = (activity as MainActivity).friendViewModel
         token = "Bearer ${sharedPreferences.getString("token", "").toString()}"
+        sentFriendRequestsAdapter = (activity as MainActivity).sentFriendRequestsAdapter
+        friendViewModel = (activity as MainActivity).friendViewModel
+
+        receivedFriendRequestsAdapter = (activity as MainActivity).receivedFriendRequestsAdapter
+
+        receivedFriendRequestsAdapter.setDeclineFriendRequestButtonCallback {
+            friendViewModel.declineFriendRequest(token, it)
+            Toast.makeText(activity, "Friend request declined", Toast.LENGTH_SHORT).show()
+        }
+        receivedFriendRequestsAdapter.setAcceptFriendRequestButtonCallback {
+            friendViewModel.acceptFriendRequest(token, it)
+            Toast.makeText(activity, "Friend request accepted", Toast.LENGTH_SHORT).show()
+        }
 
         initSentFriendRequestsRecyclerView()
         initReceivedFriendRequestRecyclerView()
@@ -78,6 +88,44 @@ class FriendRequestsFragment : Fragment() {
                     response.message?.let {
                         Toast.makeText(activity, "An error occurred $it", Toast.LENGTH_LONG).show()
                     }
+                }
+            }
+        })
+
+        friendViewModel.confirmFriendReqResponse.observe(viewLifecycleOwner, { response ->
+            when(response) {
+                is Resource.Loading -> {
+                    ViewUtils.showProgressBar(binding.friendRequestsPb)
+                }
+                is Resource.Success -> {
+                    ViewUtils.hideProgressBar(binding.friendRequestsPb)
+                    getCurrentUserReceivedFriendRequests()
+                }
+                is Resource.Error -> {
+                    ViewUtils.hideProgressBar(binding.friendRequestsPb)
+                    response.message?.let {
+                        Toast.makeText(activity, "An error occurred $it", Toast.LENGTH_LONG).show()
+                    }
+                    getCurrentUserReceivedFriendRequests()
+                }
+            }
+        })
+
+        friendViewModel.declineFriendReqResponse.observe(viewLifecycleOwner, { response ->
+            when(response) {
+                is Resource.Loading -> {
+                    ViewUtils.showProgressBar(binding.friendRequestsPb)
+                }
+                is Resource.Success -> {
+                    ViewUtils.hideProgressBar(binding.friendRequestsPb)
+                    getCurrentUserReceivedFriendRequests()
+                }
+                is Resource.Error -> {
+                    ViewUtils.hideProgressBar(binding.friendRequestsPb)
+                    response.message?.let {
+                        Toast.makeText(activity, "An error occurred $it", Toast.LENGTH_LONG).show()
+                    }
+                    getCurrentUserReceivedFriendRequests()
                 }
             }
         })

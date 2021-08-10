@@ -2,10 +2,7 @@ package com.weljak.splittermobile.presentation.di.module
 
 import com.weljak.splittermobile.domain.repository.friend.FriendRepository
 import com.weljak.splittermobile.domain.repository.user.UserRepository
-import com.weljak.splittermobile.domain.usecase.friend.CreateFriendRequestUseCase
-import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserFriendListUseCase
-import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserReceivedFriendRequestsUseCase
-import com.weljak.splittermobile.domain.usecase.friend.GetCurrentUserSentFriendRequestsUseCase
+import com.weljak.splittermobile.domain.usecase.friend.*
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
 import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
@@ -58,5 +55,17 @@ class UseCaseModule {
     @Provides
     fun provideGetCurrentUserSentFriendRequestsUseCase(friendRepository: FriendRepository): GetCurrentUserSentFriendRequestsUseCase {
         return GetCurrentUserSentFriendRequestsUseCase(friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideConfirmFriendRequestUseCase(friendRepository: FriendRepository): ConfirmFriendRequestUseCase {
+        return ConfirmFriendRequestUseCase(friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeclineFriendRequestUseCase(friendRepository: FriendRepository): DeclineFriendRequestUseCase {
+        return DeclineFriendRequestUseCase(friendRepository)
     }
 }

@@ -1,6 +1,6 @@
 package com.weljak.splittermobile.data.repository.user
 
-import com.weljak.splittermobile.data.model.SplitterApiResponse
+import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import com.weljak.splittermobile.data.model.authentication.AuthenticationRequest
 import com.weljak.splittermobile.data.model.authentication.AuthenticationResponse
 import com.weljak.splittermobile.data.model.user.RegisterUserRequest

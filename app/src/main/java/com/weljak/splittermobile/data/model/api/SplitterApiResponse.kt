@@ -1,4 +1,4 @@
-package com.weljak.splittermobile.data.model
+package com.weljak.splittermobile.data.model.api
 
 data class SplitterApiResponse<T>(
     val message: String,

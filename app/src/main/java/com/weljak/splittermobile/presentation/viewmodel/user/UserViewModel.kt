@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.weljak.splittermobile.data.model.SplitterApiResponse
+import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import com.weljak.splittermobile.data.model.authentication.AuthenticationRequest
 import com.weljak.splittermobile.data.model.authentication.AuthenticationResponse
 import com.weljak.splittermobile.data.model.user.RegisterUserRequest
