@@ -1,10 +1,12 @@
 package com.weljak.splittermobile.presentation.di.module
 
 import android.app.Application
+import com.weljak.splittermobile.domain.usecase.expense.*
 import com.weljak.splittermobile.domain.usecase.friend.*
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
 import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
+import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModelFactory
 import dagger.Module
@@ -51,6 +53,28 @@ class ViewModelFactoryModule {
             getCurrentUserReceivedFriendRequestsUseCase,
             confirmFriendRequestUseCase,
             declineFriendRequestUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideExpenseViewModelFactory(
+        app: Application,
+        createExpenseUseCase: CreateExpenseUseCase,
+        deleteExpenseUseCase: DeleteExpenseUseCase,
+        getCurrentUserUnsettledExpensesUseCase: GetCurrentUserUnsettledExpensesUseCase,
+        getExpensesByCriteriaUseCase: GetExpensesByCriteriaUseCase,
+        getExpensesByGroupNameUseCase: GetExpensesByGroupNameUseCase,
+        settleExpenseUseCase: SettleExpenseUseCase
+    ): ExpenseViewModelFactory {
+        return ExpenseViewModelFactory(
+            app,
+            createExpenseUseCase,
+            deleteExpenseUseCase,
+            getCurrentUserUnsettledExpensesUseCase,
+            getExpensesByCriteriaUseCase,
+            getExpensesByGroupNameUseCase,
+            settleExpenseUseCase
         )
     }
 }

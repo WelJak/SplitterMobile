@@ -10,6 +10,8 @@ import com.weljak.splittermobile.databinding.ActivityMainBinding
 import com.weljak.splittermobile.presentation.adapter.FriendsAdapter
 import com.weljak.splittermobile.presentation.adapter.ReceivedFriendRequestsAdapter
 import com.weljak.splittermobile.presentation.adapter.SentFriendRequestsAdapter
+import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModel
+import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModel
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModel
@@ -30,8 +32,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var receivedFriendRequestsAdapter: ReceivedFriendRequestsAdapter
     @Inject
     lateinit var friendsViewModelFactory: FriendViewModelFactory
+    @Inject
+    lateinit var expenseViewModelFactory: ExpenseViewModelFactory
     lateinit var userViewModel: UserViewModel
     lateinit var friendViewModel: FriendViewModel
+    lateinit var expenseViewModel: ExpenseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         )
         userViewModel = ViewModelProvider(this, userViewModelFactory).get(UserViewModel::class.java)
         friendViewModel = ViewModelProvider(this, friendsViewModelFactory).get(FriendViewModel::class.java)
+        expenseViewModel = ViewModelProvider(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
     }
 
     fun makeNavBarVisible() {

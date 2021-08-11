@@ -1,9 +1,12 @@
 package com.weljak.splittermobile.presentation.di.module
 
+import com.weljak.splittermobile.data.repository.datasource.expense.ExpenseRemoteDataSource
 import com.weljak.splittermobile.data.repository.datasource.friend.FriendRemoteDataSource
 import com.weljak.splittermobile.data.repository.datasource.user.UserRemoteDataSource
+import com.weljak.splittermobile.data.repository.expense.AndroidExpenseRepository
 import com.weljak.splittermobile.data.repository.friend.AndroidFriendRepository
 import com.weljak.splittermobile.data.repository.user.AndroidUserRepository
+import com.weljak.splittermobile.domain.repository.expense.ExpenseRepository
 import com.weljak.splittermobile.domain.repository.friend.FriendRepository
 import com.weljak.splittermobile.domain.repository.user.UserRepository
 import dagger.Module
@@ -25,5 +28,11 @@ class RepositoryModule {
     @Provides
     fun provideFriendRepository(friendRemoteDataSource: FriendRemoteDataSource): FriendRepository {
         return AndroidFriendRepository(friendRemoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideExpenseRepository(expenseRemoteDataSource: ExpenseRemoteDataSource): ExpenseRepository {
+        return AndroidExpenseRepository(expenseRemoteDataSource)
     }
 }

@@ -4,6 +4,10 @@ import com.weljak.splittermobile.data.model.api.ConfirmationResponse
 import com.weljak.splittermobile.data.model.authentication.AuthenticationRequest
 import com.weljak.splittermobile.data.model.authentication.AuthenticationResponse
 import com.weljak.splittermobile.data.model.api.SplitterApiResponse
+import com.weljak.splittermobile.data.model.expense.Expense
+import com.weljak.splittermobile.data.model.expense.ExpenseCreationForm
+import com.weljak.splittermobile.data.model.expense.ExpenseStatus
+import com.weljak.splittermobile.data.model.expense.ExpenseType
 import com.weljak.splittermobile.data.model.friend.Friendship
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequest
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequestCreationForm
@@ -13,6 +17,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface SplitterApiService {
+    //USER
     @POST("user/auth/login")
     suspend fun authenticateUser(@Body authenticationRequest: AuthenticationRequest):Response<SplitterApiResponse<AuthenticationResponse>>
 
@@ -22,6 +27,8 @@ interface SplitterApiService {
     @GET("user/{username}")
     suspend fun getUserDetails(@Path("username") username: String, @Header("Authorization")token:String): Response<SplitterApiResponse<UserDetails>>
 
+
+    //FRIEND
     @GET("friends")
     suspend fun getCurrentUserFriendList(@Header("Authorization") token:String): Response<SplitterApiResponse<Friendship>>
 
@@ -43,4 +50,32 @@ interface SplitterApiService {
 
     @DELETE("friends/request/cancel/{reqId}")
     suspend fun declineFriendRequest(@Header("Authorization") token: String, @Path("reqId") reqId: String): Response<SplitterApiResponse<Void>>
+
+
+    //EXPENSE
+    @POST("expense/create")
+    suspend fun createExpense(@Header("Authorization") token: String, @Body expenseCreationForm: ExpenseCreationForm): Response<SplitterApiResponse<Expense>>
+
+    @PUT("expense/settle/{id}")
+    suspend fun settleExpense(@Header("Authorization") token: String, @Path("id") expenseId: String): Response<SplitterApiResponse<Expense>>
+
+    @DELETE("expense/delete/{id}")
+    suspend fun deleteExpense(@Header("Authorization") token: String, @Path("id") expenseId: String): Response<SplitterApiResponse<Void>>
+
+    @GET("expense/all")
+    suspend fun getExpensesByCriteria(
+        @Header("Authorization") token: String,
+        @Query("paidBy") paidBy: String,
+        @Query("type") type: ExpenseType ?= null,
+        @Query("status") status:ExpenseStatus ?= null
+    ): Response<SplitterApiResponse<List<Expense>>>
+
+    @GET("expense/{groupName}")
+    suspend fun getExpensesByGroupName(
+        @Header("Authorization") token: String,
+        @Path("groupName") groupName: String
+    ): Response<SplitterApiResponse<List<Expense>>>
+
+    @GET("expense/all/unsettled")
+    suspend fun getCurrentUserUnsettledExpenses(@Header("Authorization") token: String): Response<SplitterApiResponse<List<Expense>>>
 }

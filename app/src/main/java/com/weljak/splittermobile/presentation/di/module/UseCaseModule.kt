@@ -1,7 +1,9 @@
 package com.weljak.splittermobile.presentation.di.module
 
+import com.weljak.splittermobile.domain.repository.expense.ExpenseRepository
 import com.weljak.splittermobile.domain.repository.friend.FriendRepository
 import com.weljak.splittermobile.domain.repository.user.UserRepository
+import com.weljak.splittermobile.domain.usecase.expense.*
 import com.weljak.splittermobile.domain.usecase.friend.*
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
@@ -67,5 +69,41 @@ class UseCaseModule {
     @Provides
     fun provideDeclineFriendRequestUseCase(friendRepository: FriendRepository): DeclineFriendRequestUseCase {
         return DeclineFriendRequestUseCase(friendRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCreateExpenseUseCase(expenseRepository: ExpenseRepository): CreateExpenseUseCase {
+        return CreateExpenseUseCase(expenseRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteExpenseUseCase(expenseRepository: ExpenseRepository): DeleteExpenseUseCase {
+        return DeleteExpenseUseCase(expenseRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCurrentUserUnsettledExpensesUseCase(expenseRepository: ExpenseRepository): GetCurrentUserUnsettledExpensesUseCase {
+        return GetCurrentUserUnsettledExpensesUseCase(expenseRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetExpensesByCriteriaUseCase(expenseRepository: ExpenseRepository): GetExpensesByCriteriaUseCase {
+        return GetExpensesByCriteriaUseCase(expenseRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetExpensesByGroupNameUseCase(expenseRepository: ExpenseRepository): GetExpensesByGroupNameUseCase {
+        return GetExpensesByGroupNameUseCase(expenseRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSettleExpenseUseCase(expenseRepository: ExpenseRepository): SettleExpenseUseCase {
+        return SettleExpenseUseCase(expenseRepository)
     }
 }
