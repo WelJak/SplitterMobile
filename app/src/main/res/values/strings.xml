@@ -29,4 +29,11 @@
     <string name="friend_avatar">friend_avatar</string>
     <string name="confirm_friend_request">confirm friend request</string>
     <string name="reject_friend_request">reject friend request</string>
+    <string name="expenses">Expenses</string>
+    <string name="unsettled_expenses">Unsettled expenses</string>
+    <string name="amount">Amount</string>
+    <string name="descrption">Descrption</string>
+    <string name="lender">Lender</string>
+    <string name="settle_up">Settle up</string>
+    <string name="delete">Delete</string>
 </resources>

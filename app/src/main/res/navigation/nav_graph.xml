@@ -61,4 +61,9 @@
         android:name="com.weljak.splittermobile.FriendRequestsFragment"
         android:label="fragment_friend_requests"
         tools:layout="@layout/fragment_friend_requests" />
+    <fragment
+        android:id="@+id/expensesFragment"
+        android:name="com.weljak.splittermobile.ExpensesFragment"
+        android:label="fragment_expenses"
+        tools:layout="@layout/fragment_expenses" />
 </navigation>
