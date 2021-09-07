@@ -29,5 +29,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/unsettled_expenses_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="200dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_expense_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:text="@string/add_expense" />
 </LinearLayout>

@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.databinding.FragmentExpensesBinding
 import com.weljak.splittermobile.presentation.adapter.UnsettledExpensesAdapter
-import com.weljak.splittermobile.presentation.util.ConnectionUtils
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModel
+import kotlinx.coroutines.*
 
 class ExpensesFragment : Fragment() {
     private lateinit var binding: FragmentExpensesBinding
@@ -33,23 +35,56 @@ class ExpensesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentExpensesBinding.bind(view)
-        sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        sharedPreferences =
+            requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         unsettledExpensesAdapter = (activity as MainActivity).unsettledExpensesAdapter
         expenseViewModel = (activity as MainActivity).expenseViewModel
         token = "Bearer ${sharedPreferences.getString("token", "")}"
 
         unsettledExpensesAdapter.setSettleExpenseCallback {
-            expenseViewModel.settleExpense(token, it.id)
+            val dialogBuilder = MaterialAlertDialogBuilder(activity as MainActivity)
+            dialogBuilder.setTitle(SETTLE_UP_EXPENSE_DIALOG_TITLE)
+            dialogBuilder.setMessage(SETTLE_UP_EXPENSE_MESSAGE)
+            dialogBuilder.setPositiveButton(SETTLE_UP_BUTTON_TEXT) { _, _ ->
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        coroutineScope {
+                            expenseViewModel.settleExpense(token, it.id).join()
+                            expenseViewModel.getCurrentUserUnsettledExpenses(token)
+                        }
+                    }
+                }
+                Toast.makeText(activity, "Expense settled up!", Toast.LENGTH_SHORT).show()
+            }
+            dialogBuilder.setNegativeButton(CANCEL_BUTTON_TEXT) { dialogInterface, _ ->
+                dialogInterface.cancel()
+            }
+            dialogBuilder.show()
         }
 
         unsettledExpensesAdapter.setDeleteExpenseCallback {
-            expenseViewModel.deleteExpense(token, it.id)
+            val dialogBuilder = MaterialAlertDialogBuilder(activity as MainActivity)
+            dialogBuilder.setTitle(DELETE_EXPENSE_DIALOG_TITLE)
+            dialogBuilder.setMessage(DELETE_EXPENSE_MESSAGE)
+            dialogBuilder.setPositiveButton(DELETE_BUTTON_TEXT) { _, _ ->
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        expenseViewModel.deleteExpense(token, it.id).join()
+                        expenseViewModel.getCurrentUserUnsettledExpenses(token)
+                    }
+                }
+                Toast.makeText(activity, "Expense deleted!", Toast.LENGTH_SHORT).show()
+            }
+            dialogBuilder.setNegativeButton(CANCEL_BUTTON_TEXT) { dialogInterface, _ ->
+                dialogInterface.cancel()
+            }
+            dialogBuilder.show()
         }
 
         initRecyclerView()
 
         expenseViewModel.unsettledExpenses.observe(viewLifecycleOwner, { response ->
-            when(response) {
+            when (response) {
                 is Resource.Loading -> {
 
                 }
@@ -77,5 +112,15 @@ class ExpensesFragment : Fragment() {
 
     private fun getUnsettledExpenses() {
         expenseViewModel.getCurrentUserUnsettledExpenses(token)
+    }
+
+    companion object {
+        private const val SETTLE_UP_EXPENSE_DIALOG_TITLE = "Settle up expense"
+        private const val DELETE_EXPENSE_DIALOG_TITLE = "Delete expense"
+        private const val SETTLE_UP_EXPENSE_MESSAGE = "Do you want to settle up expense?"
+        private const val DELETE_EXPENSE_MESSAGE = "Do you want to delete expense?"
+        private const val CANCEL_BUTTON_TEXT = "Cancel"
+        private const val DELETE_BUTTON_TEXT = "Delete"
+        private const val SETTLE_UP_BUTTON_TEXT = "Settle up"
     }
 }
