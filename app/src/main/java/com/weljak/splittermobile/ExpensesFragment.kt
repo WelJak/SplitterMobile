@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.weljak.splittermobile.data.util.Resource
@@ -99,6 +100,10 @@ class ExpensesFragment : Fragment() {
                 }
             }
         })
+
+        binding.addExpenseBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_expensesFragment_to_addExpenseFragment)
+        }
 
         getUnsettledExpenses()
     }

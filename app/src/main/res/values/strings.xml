@@ -37,4 +37,19 @@
     <string name="settle_up">Settle up</string>
     <string name="delete">Delete</string>
     <string name="add_expense">Add expense</string>
+    <string name="expense_type">expense type</string>
+    <string name="paid_by">paid by</string>
+    <string name="paid_by_spinner">paid by spinner</string>
+    <string name="debtors">debtors</string>
+    <string name="currency">currency</string>
+    <string name="total_sum">total sum</string>
+    <string name="lender_paid">lender paid</string>
+    <string-array name="expense_types">
+        <item>Non group</item>
+    </string-array>
+    <string-array name="currency">
+        <item>PLN</item>
+        <item>USD</item>
+        <item>EUR</item>
+    </string-array>
 </resources>
