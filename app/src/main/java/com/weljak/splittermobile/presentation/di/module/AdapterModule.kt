@@ -2,10 +2,7 @@ package com.weljak.splittermobile.presentation.di.module
 
 import android.app.Application
 import android.content.Context
-import com.weljak.splittermobile.presentation.adapter.FriendsAdapter
-import com.weljak.splittermobile.presentation.adapter.ReceivedFriendRequestsAdapter
-import com.weljak.splittermobile.presentation.adapter.SentFriendRequestsAdapter
-import com.weljak.splittermobile.presentation.adapter.UnsettledExpensesAdapter
+import com.weljak.splittermobile.presentation.adapter.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +35,11 @@ class AdapterModule {
     @Singleton
     fun provideUnsettledExpensesAdapter(): UnsettledExpensesAdapter {
         return UnsettledExpensesAdapter()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDebtorsAdapter(): DebtorsAdapter {
+        return DebtorsAdapter()
     }
 }

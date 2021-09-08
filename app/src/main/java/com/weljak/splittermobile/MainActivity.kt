@@ -7,10 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.weljak.splittermobile.databinding.ActivityMainBinding
-import com.weljak.splittermobile.presentation.adapter.FriendsAdapter
-import com.weljak.splittermobile.presentation.adapter.ReceivedFriendRequestsAdapter
-import com.weljak.splittermobile.presentation.adapter.SentFriendRequestsAdapter
-import com.weljak.splittermobile.presentation.adapter.UnsettledExpensesAdapter
+import com.weljak.splittermobile.presentation.adapter.*
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModel
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModel
@@ -37,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var expenseViewModelFactory: ExpenseViewModelFactory
     @Inject
     lateinit var unsettledExpensesAdapter: UnsettledExpensesAdapter
+    @Inject
+    lateinit var debtorsAdapter: DebtorsAdapter
     lateinit var userViewModel: UserViewModel
     lateinit var friendViewModel: FriendViewModel
     lateinit var expenseViewModel: ExpenseViewModel
