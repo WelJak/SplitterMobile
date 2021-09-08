@@ -1,171 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp"
     tools:context=".AddExpenseFragment">
 
-    <TextView
-        android:id="@+id/add_expense_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="@string/add_expense"
-        android:textSize="34sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/add_expense_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/add_expense"
+            android:textSize="34sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/expense_type_spinner"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
-        android:contentDescription="@string/expense_type"
-        android:entries="@array/expense_types"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/expense_type_title_tv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_expense_title_tv"
-        app:layout_constraintVertical_bias="1.0" />
+        <Spinner
+            android:id="@+id/expense_type_spinner"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            android:contentDescription="@string/expense_type"
+            android:entries="@array/expense_types"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/expense_type_title_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_expense_title_tv"
+            app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/expense_type_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="80dp"
-        android:text="@string/expense_type"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/expense_type_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/add_expense_title_tv" />
+        <TextView
+            android:id="@+id/expense_type_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="80dp"
+            android:text="@string/expense_type"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/expense_type_spinner"
+            app:layout_constraintTop_toBottomOf="@+id/add_expense_title_tv" />
 
-    <TextView
-        android:id="@+id/paidby_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="128dp"
-        android:text="@string/paid_by"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/paid_by_spinner"
-        app:layout_constraintStart_toStartOf="@+id/expense_type_title_tv"
-        app:layout_constraintTop_toBottomOf="@+id/expense_type_title_tv" />
+        <TextView
+            android:id="@+id/paidby_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="128dp"
+            android:text="@string/paid_by"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/paid_by_spinner"
+            app:layout_constraintStart_toStartOf="@+id/expense_type_title_tv"
+            app:layout_constraintTop_toBottomOf="@+id/expense_type_title_tv" />
 
-    <Spinner
-        android:id="@+id/paid_by_spinner"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
-        android:contentDescription="@string/paid_by_spinner"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/paidby_title_tv"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Spinner
+            android:id="@+id/paid_by_spinner"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            android:contentDescription="@string/paid_by_spinner"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/paidby_title_tv"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/total_sum_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="112dp"
-        android:text="@string/total_sum"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/total_sum_et"
-        app:layout_constraintStart_toStartOf="@+id/paidby_title_tv"
-        app:layout_constraintTop_toBottomOf="@+id/paidby_title_tv" />
+        <TextView
+            android:id="@+id/total_sum_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="112dp"
+            android:text="@string/total_sum"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/total_sum_et"
+            app:layout_constraintStart_toStartOf="@+id/paidby_title_tv"
+            app:layout_constraintTop_toBottomOf="@+id/paidby_title_tv" />
 
-    <EditText
-        android:id="@+id/total_sum_et"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/total_sum_tv"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <EditText
+            android:id="@+id/total_sum_et"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/total_sum_tv"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/amount_payed_byPayer_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/lender_paid"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/total_sum_tv"
-        app:layout_constraintTop_toBottomOf="@+id/total_sum_tv" />
+        <TextView
+            android:id="@+id/amount_payed_byPayer_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/lender_paid"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/total_sum_tv"
+            app:layout_constraintTop_toBottomOf="@+id/total_sum_tv" />
 
-    <EditText
-        android:id="@+id/editTextNumberDecimal2"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/amount_payed_byPayer_tv"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <EditText
+            android:id="@+id/editTextNumberDecimal2"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/amount_payed_byPayer_tv"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/currency_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/currency"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/amount_payed_byPayer_tv"
-        app:layout_constraintTop_toBottomOf="@+id/amount_payed_byPayer_tv" />
+        <TextView
+            android:id="@+id/currency_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/currency"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/amount_payed_byPayer_tv"
+            app:layout_constraintTop_toBottomOf="@+id/amount_payed_byPayer_tv" />
 
-    <Spinner
-        android:id="@+id/currency_spinner"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
-        android:minHeight="48dp"
-        android:entries="@array/currency"
-        app:layout_constraintBottom_toBottomOf="@+id/currency_tv"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Spinner
+            android:id="@+id/currency_spinner"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            android:minHeight="48dp"
+            android:entries="@array/currency"
+            app:layout_constraintBottom_toBottomOf="@+id/currency_tv"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/expense_breakdown_rv"
-        android:layout_width="0dp"
-        android:layout_height="160dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/create_expense_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/expense_breakdown_rv"
+            android:layout_width="0dp"
+            android:layout_height="154dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:paddingEnd="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/debtors_tv" />
 
-    <Button
-        android:id="@+id/create_expense_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginBottom="24dp"
-        android:foregroundGravity="center"
-        android:text="@string/add_expense"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/create_expense_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="32dp"
+            android:foregroundGravity="center"
+            android:text="@string/add_expense"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_breakdown_rv" />
 
-    <TextView
-        android:id="@+id/debtors_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/debtors"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/currency_tv"
-        app:layout_constraintTop_toBottomOf="@+id/currency_tv" />
+        <TextView
+            android:id="@+id/debtors_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/debtors"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/currency_tv"
+            app:layout_constraintTop_toBottomOf="@+id/currency_tv" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_constraintBottom_toBottomOf="@+id/debtors_tv"
-        app:layout_constraintStart_toStartOf="@+id/currency_spinner" />
+        <ImageButton
+            android:id="@+id/add_debtor_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintBottom_toBottomOf="@+id/debtors_tv"
+            app:layout_constraintStart_toStartOf="@+id/currency_spinner" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

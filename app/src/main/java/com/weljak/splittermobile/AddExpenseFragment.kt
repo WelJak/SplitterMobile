@@ -3,12 +3,16 @@ package com.weljak.splittermobile
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.weljak.splittermobile.data.model.expense.Debtor
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.databinding.FragmentAddExpenseBinding
 import com.weljak.splittermobile.databinding.FragmentExpensesBinding
@@ -17,6 +21,10 @@ import com.weljak.splittermobile.presentation.adapter.UnsettledExpensesAdapter
 import com.weljak.splittermobile.presentation.util.ViewUtils
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModel
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.math.BigDecimal
 import java.util.ArrayList
 import java.util.HashSet
 
@@ -44,6 +52,7 @@ class AddExpenseFragment : Fragment() {
             requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         debtorsAdapter = (activity as MainActivity).debtorsAdapter
         expenseViewModel = (activity as MainActivity).expenseViewModel
+        friendViewModel = (activity as MainActivity).friendViewModel
         token = "Bearer ${sharedPreferences.getString("token", "")}"
 
         friendViewModel.currentUserFriendship.observe(viewLifecycleOwner, { response ->
@@ -61,13 +70,35 @@ class AddExpenseFragment : Fragment() {
                 }
             }
         })
-        getFriendList()
-        debtorsAdapter.friendList = friendList.toList()
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                friendViewModel.getCurrentUserFriendList(token).join()
+                val list = friendList.toList()
+                debtorsAdapter.friendList = list
+                val payersList = ArrayList(list)
+                    payersList.add(sharedPreferences.getString("username", ""))
+                val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, payersList)
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                withContext(Dispatchers.Main) {
+                    binding.paidBySpinner.adapter = spinnerAdapter
+                }
+            }
+        }
         initRecyclerView()
+
+        binding.addDebtorBtn.setOnClickListener {
+            addDebtor()
+        }
     }
 
     private fun getFriendList() {
         friendViewModel.getCurrentUserFriendList(token)
+    }
+
+    private fun addDebtor() {
+        val debtors = ArrayList(debtorsAdapter.differ.currentList)
+        debtors.add(Debtor("", BigDecimal.ZERO))
+        debtorsAdapter.differ.submitList(debtors)
     }
 
     private fun initRecyclerView() {

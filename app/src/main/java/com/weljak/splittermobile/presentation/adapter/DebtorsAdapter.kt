@@ -35,7 +35,7 @@ class DebtorsAdapter: RecyclerView.Adapter<DebtorsAdapter.DebtorsViewHolder>() {
         holder.binding.debtorsSpinner.adapter = adapter
         holder.bind(differ.currentList[position])
         holder.binding.deleteDebtorBtn.setOnClickListener {
-            val debtors = differ.currentList
+            val debtors = ArrayList(differ.currentList)
             debtors.removeAt(position)
             differ.submitList(debtors)
         }
