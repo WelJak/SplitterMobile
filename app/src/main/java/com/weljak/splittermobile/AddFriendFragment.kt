@@ -3,17 +3,17 @@ package com.weljak.splittermobile
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.weljak.splittermobile.data.model.friend.request.FriendshipRequestCreationForm
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.databinding.FragmentAddFriendBinding
-import com.weljak.splittermobile.presentation.util.ViewUtils
+import com.weljak.splittermobile.presentation.util.view.ViewUtils
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModel
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModel
 
@@ -35,7 +35,8 @@ class AddFriendFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddFriendBinding.bind(view)
-        sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        sharedPreferences =
+            requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         friendViewModel = (activity as MainActivity).friendViewModel
         userViewModel = (activity as MainActivity).userViewModel
         token = sharedPreferences.getString("token", "").toString()
@@ -71,14 +72,18 @@ class AddFriendFragment : Fragment() {
         })
 
         friendViewModel.addFriendReqResponse.observe(viewLifecycleOwner, { response ->
-            when(response) {
+            when (response) {
                 is Resource.Loading -> {
                     ViewUtils.showProgressBar(binding.friendPb)
                 }
                 is Resource.Success -> {
                     ViewUtils.hideProgressBar(binding.friendPb)
                     response.data?.let {
-                        Toast.makeText(activity, "Friend request for user: ${it.payload?.potentialFriend?.username} has been sent", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            activity,
+                            "Friend request for user: ${it.payload?.potentialFriend?.username} has been sent",
+                            Toast.LENGTH_LONG
+                        ).show()
                         clearUserDetails()
                     }
                 }
@@ -104,7 +109,7 @@ class AddFriendFragment : Fragment() {
             findNavController().navigate(R.id.action_addFriendFragment_to_friendRequestsFragment)
         }
 
-        binding.searchFriendSv.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        binding.searchFriendSv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     searchFriend(it, "Bearer $token")

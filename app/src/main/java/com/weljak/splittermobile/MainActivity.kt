@@ -1,8 +1,8 @@
 package com.weljak.splittermobile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -20,20 +20,28 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     @Inject
     lateinit var userViewModelFactory: UserViewModelFactory
+
     @Inject
     lateinit var friendsAdapter: FriendsAdapter
+
     @Inject
     lateinit var sentFriendRequestsAdapter: SentFriendRequestsAdapter
+
     @Inject
     lateinit var receivedFriendRequestsAdapter: ReceivedFriendRequestsAdapter
+
     @Inject
     lateinit var friendsViewModelFactory: FriendViewModelFactory
+
     @Inject
     lateinit var expenseViewModelFactory: ExpenseViewModelFactory
+
     @Inject
     lateinit var unsettledExpensesAdapter: UnsettledExpensesAdapter
+
     @Inject
     lateinit var debtorsAdapter: DebtorsAdapter
     lateinit var userViewModel: UserViewModel
@@ -52,8 +60,10 @@ class MainActivity : AppCompatActivity() {
             navController
         )
         userViewModel = ViewModelProvider(this, userViewModelFactory).get(UserViewModel::class.java)
-        friendViewModel = ViewModelProvider(this, friendsViewModelFactory).get(FriendViewModel::class.java)
-        expenseViewModel = ViewModelProvider(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
+        friendViewModel =
+            ViewModelProvider(this, friendsViewModelFactory).get(FriendViewModel::class.java)
+        expenseViewModel =
+            ViewModelProvider(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
     }
 
     fun makeNavBarVisible() {

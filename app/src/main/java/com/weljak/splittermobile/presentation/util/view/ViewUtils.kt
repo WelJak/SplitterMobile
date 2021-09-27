@@ -1,4 +1,4 @@
-package com.weljak.splittermobile.presentation.util
+package com.weljak.splittermobile.presentation.util.view
 
 import android.view.View
 import android.widget.Button

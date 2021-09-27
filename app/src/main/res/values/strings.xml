@@ -44,6 +44,8 @@
     <string name="currency">currency</string>
     <string name="total_sum">total sum</string>
     <string name="lender_paid">lender paid</string>
+    <string name="description_lower">description</string>
+    <string name="add_debtor">add debtor</string>
     <string-array name="expense_types">
         <item>Non group</item>
     </string-array>

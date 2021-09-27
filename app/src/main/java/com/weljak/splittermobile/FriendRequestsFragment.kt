@@ -3,17 +3,17 @@ package com.weljak.splittermobile
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.databinding.FragmentFriendRequestsBinding
 import com.weljak.splittermobile.presentation.adapter.ReceivedFriendRequestsAdapter
 import com.weljak.splittermobile.presentation.adapter.SentFriendRequestsAdapter
-import com.weljak.splittermobile.presentation.util.ViewUtils
+import com.weljak.splittermobile.presentation.util.view.ViewUtils
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModel
 
 class FriendRequestsFragment : Fragment() {
@@ -35,7 +35,8 @@ class FriendRequestsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFriendRequestsBinding.bind(view)
-        sharedPreferences = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        sharedPreferences =
+            requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         token = "Bearer ${sharedPreferences.getString("token", "").toString()}"
         sentFriendRequestsAdapter = (activity as MainActivity).sentFriendRequestsAdapter
         friendViewModel = (activity as MainActivity).friendViewModel
@@ -55,7 +56,7 @@ class FriendRequestsFragment : Fragment() {
         initReceivedFriendRequestRecyclerView()
 
         friendViewModel.sentFriendRequests.observe(viewLifecycleOwner, { response ->
-            when(response) {
+            when (response) {
                 is Resource.Loading -> {
                     ViewUtils.showProgressBar(binding.friendRequestsPb)
                 }
@@ -74,7 +75,7 @@ class FriendRequestsFragment : Fragment() {
         })
 
         friendViewModel.receivedFriendRequests.observe(viewLifecycleOwner, { response ->
-            when(response) {
+            when (response) {
                 is Resource.Loading -> {
                     ViewUtils.showProgressBar(binding.friendRequestsPb)
                 }
@@ -93,7 +94,7 @@ class FriendRequestsFragment : Fragment() {
         })
 
         friendViewModel.confirmFriendReqResponse.observe(viewLifecycleOwner, { response ->
-            when(response) {
+            when (response) {
                 is Resource.Loading -> {
                     ViewUtils.showProgressBar(binding.friendRequestsPb)
                 }
@@ -112,7 +113,7 @@ class FriendRequestsFragment : Fragment() {
         })
 
         friendViewModel.declineFriendReqResponse.observe(viewLifecycleOwner, { response ->
-            when(response) {
+            when (response) {
                 is Resource.Loading -> {
                     ViewUtils.showProgressBar(binding.friendRequestsPb)
                 }
