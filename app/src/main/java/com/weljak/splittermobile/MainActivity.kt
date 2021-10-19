@@ -12,6 +12,8 @@ import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModel
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModel
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModelFactory
+import com.weljak.splittermobile.presentation.viewmodel.group.GroupViewModel
+import com.weljak.splittermobile.presentation.viewmodel.group.GroupViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModel
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,9 +46,17 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var debtorsAdapter: DebtorsAdapter
+
+    @Inject
+    lateinit var groupViewModelFactory: GroupViewModelFactory
+
+    @Inject
+    lateinit var currentUserGroupsAdapter: CurrentUserGroupsAdapter
+
     lateinit var userViewModel: UserViewModel
     lateinit var friendViewModel: FriendViewModel
     lateinit var expenseViewModel: ExpenseViewModel
+    lateinit var groupViewModel: GroupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +74,7 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider(this, friendsViewModelFactory).get(FriendViewModel::class.java)
         expenseViewModel =
             ViewModelProvider(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
+        groupViewModel = ViewModelProvider(this, groupViewModelFactory).get(GroupViewModel::class.java)
     }
 
     fun makeNavBarVisible() {

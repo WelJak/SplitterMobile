@@ -5,6 +5,8 @@ import com.weljak.splittermobile.data.repository.datasource.expense.ExpenseRemot
 import com.weljak.splittermobile.data.repository.datasource.expense.RetrofitExpenseRemoteDataSource
 import com.weljak.splittermobile.data.repository.datasource.friend.FriendRemoteDataSource
 import com.weljak.splittermobile.data.repository.datasource.friend.RetrofitFriendRemoteDataSource
+import com.weljak.splittermobile.data.repository.datasource.group.GroupRemoteDataSource
+import com.weljak.splittermobile.data.repository.datasource.group.RetrofitGroupRemoteDataSource
 import com.weljak.splittermobile.data.repository.datasource.user.RetrofitUserRemoteDataSource
 import com.weljak.splittermobile.data.repository.datasource.user.UserRemoteDataSource
 import dagger.Module
@@ -32,5 +34,11 @@ class RemoteDataModule {
     @Provides
     fun provideExpenseRemoteDataSource(splitterApiService: SplitterApiService): ExpenseRemoteDataSource {
         return RetrofitExpenseRemoteDataSource(splitterApiService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGroupRemoteDataSource(splitterApiService: SplitterApiService): GroupRemoteDataSource {
+        return RetrofitGroupRemoteDataSource(splitterApiService)
     }
 }

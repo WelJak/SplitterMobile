@@ -59,7 +59,6 @@ class HomeFragment : Fragment() {
     private fun getCurrentUserData() {
         val username = sharedPreferences.getString("username", "")
         val token = sharedPreferences.getString("token", "")
-        Log.i("app", username + token)
         if (username != null && token != null) {
             viewModel.getCurrentUserData(
                 username,

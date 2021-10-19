@@ -42,4 +42,10 @@ class AdapterModule {
     fun provideDebtorsAdapter(): DebtorsAdapter {
         return DebtorsAdapter()
     }
+
+    @Provides
+    @Singleton
+    fun provideCurrentUserGroupsAdapter(): CurrentUserGroupsAdapter {
+        return CurrentUserGroupsAdapter()
+    }
 }

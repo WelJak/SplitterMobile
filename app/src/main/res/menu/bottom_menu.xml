@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/friends" />
     <item
+        android:id="@+id/groupsFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/groups" />
+    <item
         android:id="@+id/expensesFragment"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/expenses" />

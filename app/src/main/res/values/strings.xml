@@ -46,6 +46,7 @@
     <string name="lender_paid">lender paid</string>
     <string name="description_lower">description</string>
     <string name="add_debtor">add debtor</string>
+    <string name="groups">Groups</string>
     <string-array name="expense_types">
         <item>Non group</item>
     </string-array>

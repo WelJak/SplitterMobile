@@ -3,11 +3,13 @@ package com.weljak.splittermobile.presentation.di.module
 import android.app.Application
 import com.weljak.splittermobile.domain.usecase.expense.*
 import com.weljak.splittermobile.domain.usecase.friend.*
+import com.weljak.splittermobile.domain.usecase.group.*
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
 import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.friend.FriendViewModelFactory
+import com.weljak.splittermobile.presentation.viewmodel.group.GroupViewModelFactory
 import com.weljak.splittermobile.presentation.viewmodel.user.UserViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -75,6 +77,32 @@ class ViewModelFactoryModule {
             getExpensesByCriteriaUseCase,
             getExpensesByGroupNameUseCase,
             settleExpenseUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideGroupViewModelFactory(
+        app: Application,
+        createGroupUseCase: CreateGroupUseCase,
+        getCurrentUserGroupsUseCase: GetCurrentUserGroupsUseCase,
+        getGroupByIdUseCase: GetGroupByIdUseCase,
+        deleteGroupByIdUseCase: DeleteGroupByIdUseCase,
+        findGroupsByNameUseCase: FindGroupsByNameUseCase,
+        addUsersToGroupUseCase: AddUsersToGroupUseCase,
+        removeMembersFromGroupUseCase: RemoveMembersFromGroupUseCase,
+        leaveGroupUseCase: LeaveGroupUseCase
+    ): GroupViewModelFactory {
+        return GroupViewModelFactory(
+            app,
+            createGroupUseCase,
+            getCurrentUserGroupsUseCase,
+            getGroupByIdUseCase,
+            deleteGroupByIdUseCase,
+            findGroupsByNameUseCase,
+            addUsersToGroupUseCase,
+            removeMembersFromGroupUseCase,
+            leaveGroupUseCase
         )
     }
 }

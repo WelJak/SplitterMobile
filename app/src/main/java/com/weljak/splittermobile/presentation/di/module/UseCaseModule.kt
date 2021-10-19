@@ -2,9 +2,11 @@ package com.weljak.splittermobile.presentation.di.module
 
 import com.weljak.splittermobile.domain.repository.expense.ExpenseRepository
 import com.weljak.splittermobile.domain.repository.friend.FriendRepository
+import com.weljak.splittermobile.domain.repository.group.GroupRepository
 import com.weljak.splittermobile.domain.repository.user.UserRepository
 import com.weljak.splittermobile.domain.usecase.expense.*
 import com.weljak.splittermobile.domain.usecase.friend.*
+import com.weljak.splittermobile.domain.usecase.group.*
 import com.weljak.splittermobile.domain.usecase.user.AuthenticateUserUseCase
 import com.weljak.splittermobile.domain.usecase.user.GetUserDetailsUseCase
 import com.weljak.splittermobile.domain.usecase.user.RegisterUserUseCase
@@ -105,5 +107,53 @@ class UseCaseModule {
     @Provides
     fun provideSettleExpenseUseCase(expenseRepository: ExpenseRepository): SettleExpenseUseCase {
         return SettleExpenseUseCase(expenseRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAddUsersToGroupUseCase(groupRepository: GroupRepository): AddUsersToGroupUseCase {
+        return AddUsersToGroupUseCase(groupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCreateGroupUseCase(groupRepository: GroupRepository): CreateGroupUseCase {
+        return CreateGroupUseCase(groupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteGroupByIdUseCase(groupRepository: GroupRepository): DeleteGroupByIdUseCase {
+        return DeleteGroupByIdUseCase(groupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFindGroupsByNameUseCase(groupRepository: GroupRepository): FindGroupsByNameUseCase {
+        return FindGroupsByNameUseCase(groupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCurrentUserGroupsUseCase(groupRepository: GroupRepository): GetCurrentUserGroupsUseCase {
+        return GetCurrentUserGroupsUseCase(groupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetGroupByIdUseCase(groupRepository: GroupRepository): GetGroupByIdUseCase {
+        return GetGroupByIdUseCase(groupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLeaveGroupUseCase(groupRepository: GroupRepository): LeaveGroupUseCase {
+        return LeaveGroupUseCase(groupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoveMembersFromGroupUseCase(groupRepository: GroupRepository): RemoveMembersFromGroupUseCase {
+        return RemoveMembersFromGroupUseCase(groupRepository)
     }
 }

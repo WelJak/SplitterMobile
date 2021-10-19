@@ -11,6 +11,8 @@ sealed class Resource<T>(
     class Loading<T>(data: T? = null) : Resource<T>(data)
     class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
     companion object {
+        private const val NO_INTERNET_CONNECTION_MESSAGE = "No internet connection"
+
         fun <T> valueOf(splitterApiResponse: Response<SplitterApiResponse<T>>):Resource<SplitterApiResponse<T>> {
             if (splitterApiResponse.isSuccessful) {
                 splitterApiResponse.body()?.let { result ->
@@ -18,6 +20,10 @@ sealed class Resource<T>(
                 }
             }
             return Error(splitterApiResponse.message())
+        }
+
+        fun <T> noInternetConnection(): Resource<SplitterApiResponse<T>> {
+            return Error(NO_INTERNET_CONNECTION_MESSAGE)
         }
     }
 }
