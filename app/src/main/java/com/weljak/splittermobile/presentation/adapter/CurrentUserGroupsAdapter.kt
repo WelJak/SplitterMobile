@@ -19,6 +19,8 @@ class CurrentUserGroupsAdapter: RecyclerView.Adapter<CurrentUserGroupsAdapter.Cu
         }
     }
 
+    private var groupDetailsButtonCallback: ((Group) -> Unit) ?= null
+
     val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrentUserGroupsViewHolder {
@@ -35,12 +37,20 @@ class CurrentUserGroupsAdapter: RecyclerView.Adapter<CurrentUserGroupsAdapter.Cu
         return differ.currentList.size
     }
 
+    fun setGroupDetailsButtonCallback(callback: (Group) -> Unit) {
+        groupDetailsButtonCallback = callback
+    }
+
     inner class CurrentUserGroupsViewHolder(val binding: UserGroupListElementBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(group: Group) {
             binding.groupNameTv.text = group.groupName
             binding.createdAtTv.text = group.createdAt.toString()
             binding.createdByTv.text = group.createdBy
             binding.membersCountTv.text = group.members?.size.toString()
+
+            binding.groupDetailsBtn.setOnClickListener {
+                groupDetailsButtonCallback?.let { buttonCallback -> buttonCallback(group) }
+            }
         }
     }
 

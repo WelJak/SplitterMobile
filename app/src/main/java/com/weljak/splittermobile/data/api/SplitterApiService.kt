@@ -118,7 +118,7 @@ interface SplitterApiService {
         @Body toAdd: ManageGroupMembershipRequest
     ): Response<SplitterApiResponse<Group>>
 
-    @DELETE(Endpoints.REMOVE_MEMBERS_FROM_GROUP_ENDPOINT)
+    @HTTP(method = "DELETE", path = Endpoints.REMOVE_MEMBERS_FROM_GROUP_ENDPOINT, hasBody = true)
     suspend fun removeMembersFromGroup(
         @Header(Headers.AUTH_HEADER_NAME) token: String,
         @Path("id") id: String,

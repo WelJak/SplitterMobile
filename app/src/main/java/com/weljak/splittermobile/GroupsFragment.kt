@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.weljak.splittermobile.data.util.Resource
 import com.weljak.splittermobile.databinding.FragmentGroupsBinding
@@ -36,6 +39,12 @@ class GroupsFragment : Fragment() {
         groupViewModel = (activity as MainActivity).groupViewModel
         groupsAdapter = (activity as MainActivity).currentUserGroupsAdapter
         token = "Bearer " + sharedPreferences.getString("token", "")
+
+        groupsAdapter.setGroupDetailsButtonCallback {
+            val bundle = bundleOf("group" to it)
+            findNavController().navigate(R.id.action_groupsFragment_to_groupDetailsFragment, bundle)
+        }
+
         initRecyclerView()
 
         groupViewModel.getCurrentUserGroupsResponse.observe(viewLifecycleOwner) { response ->

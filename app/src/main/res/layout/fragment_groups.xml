@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,9 +21,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groups_rv"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="400dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="4dp"
         android:minHeight="120dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_group_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="@string/create_group" />
 </LinearLayout>

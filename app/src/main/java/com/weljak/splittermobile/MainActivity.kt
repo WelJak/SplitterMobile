@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var currentUserGroupsAdapter: CurrentUserGroupsAdapter
 
+    @Inject
+    lateinit var groupMembersAdapter: GroupMembersAdapter
+
     lateinit var userViewModel: UserViewModel
     lateinit var friendViewModel: FriendViewModel
     lateinit var expenseViewModel: ExpenseViewModel

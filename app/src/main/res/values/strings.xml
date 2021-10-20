@@ -47,6 +47,14 @@
     <string name="description_lower">description</string>
     <string name="add_debtor">add debtor</string>
     <string name="groups">Groups</string>
+    <string name="group_name">Group name:</string>
+    <string name="created_by">Created by:</string>
+    <string name="created_at">Created at:</string>
+    <string name="number_of_members">No. members:</string>
+    <string name="create_group">Create group</string>
+    <string name="group_details">Group details</string>
+    <string name="members">Members</string>
+    <string name="add_members">Add members</string>
     <string-array name="expense_types">
         <item>Non group</item>
     </string-array>

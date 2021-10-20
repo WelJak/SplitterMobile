@@ -48,4 +48,10 @@ class AdapterModule {
     fun provideCurrentUserGroupsAdapter(): CurrentUserGroupsAdapter {
         return CurrentUserGroupsAdapter()
     }
+
+    @Provides
+    @Singleton
+    fun provideGroupMembersAdapter(): GroupMembersAdapter {
+        return GroupMembersAdapter()
+    }
 }
