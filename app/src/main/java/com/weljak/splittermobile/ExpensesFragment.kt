@@ -8,13 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.weljak.splittermobile.data.util.Resource
-import com.weljak.splittermobile.databinding.DebtorsListElementBinding
 import com.weljak.splittermobile.databinding.FragmentExpensesBinding
 import com.weljak.splittermobile.presentation.adapter.UnsettledExpensesAdapter
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModel
