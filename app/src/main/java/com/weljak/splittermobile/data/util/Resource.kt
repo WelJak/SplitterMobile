@@ -1,5 +1,6 @@
 package com.weljak.splittermobile.data.util
 
+import com.google.gson.JsonParser
 import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import retrofit2.Response
 
@@ -19,7 +20,8 @@ sealed class Resource<T>(
                     return Success(result)
                 }
             }
-            return Error(splitterApiResponse.message())
+            val faultResponse = JsonParser.parseReader(splitterApiResponse.errorBody()?.charStream()).asJsonObject
+            return Error(faultResponse.get("message").asString)
         }
 
         fun <T> noInternetConnection(): Resource<SplitterApiResponse<T>> {
