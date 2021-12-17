@@ -118,12 +118,21 @@
             android:padding="6dp" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/add_member_ib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="6dp"
             android:src="@android:drawable/ic_input_add" />
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/leave_group_bttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:padding="8dp"
+        android:text="leave group" />
 
 </LinearLayout>

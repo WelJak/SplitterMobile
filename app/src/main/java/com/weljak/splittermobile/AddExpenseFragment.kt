@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.weljak.splittermobile.data.model.expense.Currency
 import com.weljak.splittermobile.data.model.expense.Debtor
@@ -39,6 +40,7 @@ class AddExpenseFragment : Fragment() {
     private var previousPayer: String = ""
     private val friendList = HashSet<String>()
     private var displayMessage = false
+    private var selectedPayer = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -136,9 +138,11 @@ class AddExpenseFragment : Fragment() {
                 if (previousPayer.isNotBlank()) {
                     debtorsSpinnerAdapter.add(previousPayer)
                 }
+//                val currentPayer = binding.paidBySpinner.selectedItem.toString()
                 val currentPayer = binding.paidBySpinner.selectedItem.toString()
                 debtorsSpinnerAdapter.remove(currentPayer)
                 previousPayer = currentPayer
+                selectedPayer = currentPayer
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -154,6 +158,7 @@ class AddExpenseFragment : Fragment() {
 
         binding.createExpenseBtn.setOnClickListener {
             createExpense()
+            findNavController().navigate(R.id.action_addExpenseFragment_to_expensesFragment)
         }
     }
 
@@ -163,7 +168,7 @@ class AddExpenseFragment : Fragment() {
         }.toMap()
         val expenseCreationForm = ExpenseCreationForm(
             binding.expenseDescEt.text.toString(),
-            binding.paidBySpinner.selectedItem.toString(),
+            selectedPayer,
             BigDecimal(binding.lenderPaidEt.text.toString()),
             BigDecimal(binding.totalSumEt.text.toString()),
             Currency.valueOf(binding.currencySpinner.selectedItem.toString()),
@@ -173,7 +178,9 @@ class AddExpenseFragment : Fragment() {
             null,
             expenseBreakDown
         )
-        expenseViewModel.createExpense(token, expenseCreationForm)
+        lifecycleScope.launch(Dispatchers.IO) {
+            expenseViewModel.createExpense(token, expenseCreationForm).join()
+        }
     }
 
     private fun addDebtor() {

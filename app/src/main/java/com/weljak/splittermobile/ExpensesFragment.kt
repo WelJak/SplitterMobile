@@ -17,6 +17,7 @@ import com.weljak.splittermobile.databinding.FragmentExpensesBinding
 import com.weljak.splittermobile.presentation.adapter.UnsettledExpensesAdapter
 import com.weljak.splittermobile.presentation.viewmodel.expense.ExpenseViewModel
 import kotlinx.coroutines.*
+import retrofit2.http.GET
 
 class ExpensesFragment : Fragment() {
     private lateinit var binding: FragmentExpensesBinding
@@ -108,6 +109,10 @@ class ExpensesFragment : Fragment() {
         getUnsettledExpenses()
     }
 
+    override fun onStart() {
+        super.onStart()
+        getUnsettledExpenses()
+    }
     private fun initRecyclerView() {
         binding.unsettledExpensesRv.apply {
             adapter = unsettledExpensesAdapter
