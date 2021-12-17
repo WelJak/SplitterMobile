@@ -3,7 +3,6 @@ package com.weljak.splittermobile
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.weljak.splittermobile.data.model.api.SplitterApiResponse
 import com.weljak.splittermobile.data.model.group.Group
 import com.weljak.splittermobile.data.model.group.ManageGroupMembershipRequest
 import com.weljak.splittermobile.data.util.Resource
@@ -24,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
+import java.util.Collections
 import kotlin.collections.ArrayList
 
 class GroupDetailsFragment : Fragment() {
@@ -39,7 +40,9 @@ class GroupDetailsFragment : Fragment() {
     private val potentialMembers = HashSet<String>()
     private var errorNotDisplayed = false
     private var removalConfirmationNotDisplayed = false
-    private var groupNotChanged = false
+    private var groupNotUpdated = false
+    private var userAddedNotDisplayed = false
+    private var leaveConfirmationNotDisplayed = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +66,7 @@ class GroupDetailsFragment : Fragment() {
             val dialogBuilder = MaterialAlertDialogBuilder(activity as MainActivity)
             dialogBuilder.setTitle(REMOVE_USER_FROM_GROUP_DIALOG_TITLE)
             dialogBuilder.setMessage(REMOVE_USER_FROM_GROUP_DIALOG_MESSAGE.replace("{}", it))
-            dialogBuilder.setPositiveButton(REMOVE_USER_FROM_GROUP_CONFIRM_BUTTON_TEXT) { _, _ ->
+            dialogBuilder.setPositiveButton(REMOVE_CONFIRM_BUTTON_TEXT) { _, _ ->
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         coroutineScope {
@@ -77,7 +80,46 @@ class GroupDetailsFragment : Fragment() {
                 }
                 errorNotDisplayed = true
                 removalConfirmationNotDisplayed = true
-                groupNotChanged = true
+                groupNotUpdated = true
+            }
+            dialogBuilder.setNegativeButton(CANCEL_BUTTON_TEXT) {dialogInterface, _ ->
+                dialogInterface.cancel()
+            }
+            dialogBuilder.show()
+        }
+
+        binding.addMemberIb.setOnClickListener {
+            val selectedUser = binding.potentialMembersSpinner.selectedItem?.toString()
+                ?: return@setOnClickListener
+            val toAdd = ManageGroupMembershipRequest(Collections.singletonList(selectedUser))
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    coroutineScope {
+                        groupViewModel.addUsersToGroup(token, group.id, toAdd).join()
+                        groupViewModel.getGroupById(token, group.id)
+                    }.join()
+                    withContext(Dispatchers.Main.immediate) {
+                        spinnerAdapter.remove(selectedUser)
+                    }
+                }
+            }
+            errorNotDisplayed = true
+            userAddedNotDisplayed = true
+            groupNotUpdated = true
+        }
+
+        binding.leaveGroupBttn.setOnClickListener {
+            val dialogBuilder = MaterialAlertDialogBuilder(activity as MainActivity)
+            dialogBuilder.setTitle(LEAVE_GROUP_DIALOG_TITLE)
+            dialogBuilder.setMessage(LEAVE_GROUP_DIALOG_MESSAGE)
+            dialogBuilder.setPositiveButton(REMOVE_CONFIRM_BUTTON_TEXT) { _, _  ->
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        errorNotDisplayed = true
+                        leaveConfirmationNotDisplayed = true
+                        groupViewModel.leaveGroup(token, group.id).join()
+                    }
+                }
             }
             dialogBuilder.setNegativeButton(CANCEL_BUTTON_TEXT) {dialogInterface, _ ->
                 dialogInterface.cancel()
@@ -87,6 +129,21 @@ class GroupDetailsFragment : Fragment() {
 
         initGroupDetails()
         initRecyclerView()
+
+        groupViewModel.addUsersToGroupResponse.observe(viewLifecycleOwner) { response ->
+            when(response) {
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    if (userAddedNotDisplayed) {
+                        Toast.makeText(context, "User added to group!", Toast.LENGTH_SHORT).show()
+                    }
+                    userAddedNotDisplayed = false
+                }
+                is Resource.Error -> {
+                    displayError(response)
+                }
+            }
+        }
 
         groupViewModel.removeUsersFromGroupResponse.observe(viewLifecycleOwner) { response ->
             when(response) {
@@ -98,25 +155,39 @@ class GroupDetailsFragment : Fragment() {
                     removalConfirmationNotDisplayed = false
                 }
                 is Resource.Error -> {
-                    if (errorNotDisplayed) {
-                        Toast.makeText(context, "${response.message}", Toast.LENGTH_LONG).show()
-                    }
-                    errorNotDisplayed = false
+                    displayError(response)
                 }
             }
         }
+
+        groupViewModel.leaveGroupResponse.observe(viewLifecycleOwner) { response ->
+            when(response) {
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    if (leaveConfirmationNotDisplayed) {
+                        Toast.makeText(context, "Group left", Toast.LENGTH_SHORT).show()
+                    }
+                    leaveConfirmationNotDisplayed = false
+                    findNavController().popBackStack()
+                }
+                is Resource.Error -> {
+                    displayError(response)
+                }
+            }
+        }
+
         groupViewModel.getGroupByIdResponse.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is Resource.Loading -> {
 
                 }
                 is Resource.Success -> {
-                   if (groupNotChanged) {
+                   if (groupNotUpdated) {
                        val payload = response.data!!.payload
                        groupMembersAdapter.differ.submitList(payload!!.members)
                        group = payload
                    }
-                    groupNotChanged = false
+                    groupNotUpdated = false
                 }
                 is Resource.Error -> {
 
@@ -163,10 +234,19 @@ class GroupDetailsFragment : Fragment() {
         }
     }
 
+    private fun <T> displayError(response: Resource.Error<SplitterApiResponse<T>>) {
+        if (errorNotDisplayed) {
+            Toast.makeText(context, "${response.message}", Toast.LENGTH_LONG).show()
+        }
+        errorNotDisplayed = false
+    }
+
     companion object {
         private const val REMOVE_USER_FROM_GROUP_DIALOG_TITLE = "Remove user from group"
         private const val REMOVE_USER_FROM_GROUP_DIALOG_MESSAGE = "Do you really want to remove {} from group?"
-        private const val REMOVE_USER_FROM_GROUP_CONFIRM_BUTTON_TEXT = "Remove"
+        private const val LEAVE_GROUP_DIALOG_TITLE = "Leave group"
+        private const val LEAVE_GROUP_DIALOG_MESSAGE = "Do you want to leave group? If you are owner of the group it will be permanently deleted"
+        private const val REMOVE_CONFIRM_BUTTON_TEXT = "Remove"
         private const val CANCEL_BUTTON_TEXT = "Cancel"
     }
 }
